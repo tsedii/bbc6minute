@@ -10,7 +10,7 @@ namespace bbc_6_minute
         std::string GetUrlAddress();
     
     private:
-        unsigned int GetDownloadPageNumber();
+        unsigned int GetUnitNumber();
 
     private:
         static unsigned int download_page_number_;
@@ -22,12 +22,12 @@ namespace bbc_6_minute
     std::string CurrentUnitPageUrlAddress::GetUrlAddress()
     {
         return std::string(lower_intermediate_course_url_address_begin 
-            + std::to_string(GetDownloadPageNumber())
+            + std::to_string(GetUnitNumber())
             + url_address_end
         );
     }
 
-    unsigned int CurrentUnitPageUrlAddress::GetDownloadPageNumber()
+    unsigned int CurrentUnitPageUrlAddress::GetUnitNumber()
     {
         return download_page_number_++;
     }
