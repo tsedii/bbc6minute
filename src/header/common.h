@@ -10,6 +10,10 @@ namespace bbc_6_minute
     const std::string url_address_end{"/downloads"};
 
     const std::filesystem::path lower_intermediate_course_path{L"/home/dii/English/lowerIntermediate"};
+
+    const std::string downloads_file_name{"downloads"};
+
+    const std::string string_extract_file_name_template{"[^<]*<a href=\"([^\"]*)\">Download"};
 }
 
 
