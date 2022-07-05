@@ -57,6 +57,12 @@ namespace bbc_6_minute
                     continue;
                 }
 
+                /*
+                std::regex_search cause Segmentation fault when trying to process too big std::string().size() = 269553
+                */
+
+                //std::cout << downloads_file_line.size() << std::endl;
+
                 std::smatch match;
 
                 std::string::const_iterator search_start( downloads_file_line.cbegin() );
