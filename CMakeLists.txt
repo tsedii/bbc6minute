@@ -1,7 +1,11 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(bbc6minute VERSION 0.1.0)
+cmake_minimum_required( VERSION 3.0.0 )
 
-set(CMAKE_CXX_STANDARD 20)
+project( bbc6minute VERSION 0.1.0 )
 
-add_executable(bbc6minute src/main.cpp)
-target_include_directories(bbc6minute PUBLIC src/header/)
+set( CMAKE_CXX_STANDARD 20 )
+
+set( SOURCE_FILES src/main.cpp src/source/currentUnitPageUrlAddress.cpp src/source/supportingTools.cpp )
+
+include_directories( src/header/ )
+
+add_executable( ${PROJECT_NAME} ${SOURCE_FILES} )
