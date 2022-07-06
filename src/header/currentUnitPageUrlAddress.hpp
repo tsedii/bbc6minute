@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common.h"
+#include "common.hpp"
 
 
 namespace bbc_6_minute
@@ -10,10 +10,10 @@ namespace bbc_6_minute
     {
     public:
         std::string GetUrlAddress();
-    
+
     private:
         unsigned int GetUnitNumber();
-    
+
     private:
         static unsigned int download_page_number_;
     };

@@ -1,13 +1,19 @@
 #pragma once
 
-#include "common.h"
+#include "common.hpp"
+
+#include <memory>
 
 
 namespace bbc_6_minute
 {
     std::string GetWgetCommandLine();
 
-    void GetFilesUrlAddressesForDownload();
+    std::shared_ptr<MediasAndTranscriptsUrlAddresses> GetMediasAndTranscriptsUrlAddresses();
 
-    void CheckFileExistenceOnFilesystem();
+    void DownloadCurrentUnitMediasAndTranscriptsUrlAddresses();
+
+    void CheckFilesExistenceOnFilesystem(std::shared_ptr<MediasAndTranscriptsUrlAddresses> medias_and_transcripts_url_addresses_ptr);
+
+    std::string DownloadFileNameToFilesystemFileName(const std::string& download_file_name);
 }
