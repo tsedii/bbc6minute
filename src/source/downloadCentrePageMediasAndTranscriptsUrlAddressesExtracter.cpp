@@ -1,4 +1,6 @@
 #include "downloadCentrePageMediasAndTranscriptsUrlAddressesExtracter.hpp"
+#include "currentUnit.hpp"
+#include "missingFiles.hpp"
 
 #include <fstream>
 #include <regex>
@@ -47,6 +49,7 @@ namespace bbc_6_minute
                 }
 
             }
+
             return medias_and_transcripts_url_addresses_ptr;
         }
         catch(const std::exception& e)
@@ -57,16 +60,25 @@ namespace bbc_6_minute
         {
             std::cerr << "Unknown error" << '\n';
         }
+
         return nullptr;
     }
 
     void DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::CheckFilesExistenceOnFilesystem(std::shared_ptr<MediasAndTranscriptsUrlAddresses> medias_and_transcripts_url_addresses_file_names_ptr)
     {
+        if(!medias_and_transcripts_url_addresses_file_names_ptr)
+        {
+            return;
+        }
+
         for(const auto& medias_and_transcripts_url_addresses_file_name : (*medias_and_transcripts_url_addresses_file_names_ptr))
         {
-            std::string filesystem_file_name(DownloadFileNameToFilesystemFileName(medias_and_transcripts_url_addresses_file_name));
+            std::filesystem::path filesystem_file_name(DownloadFileNameToFilesystemFileName(medias_and_transcripts_url_addresses_file_name));
 
-            IsFilesystemFileExist(filesystem_file_name);
+            if(!IsFilesystemFileExist(filesystem_file_name))
+            {
+                MissingFiles().SaveForDownload(medias_and_transcripts_url_addresses_file_name, filesystem_file_name);
+            }
         }
     }
 
@@ -75,7 +87,7 @@ namespace bbc_6_minute
         const size_t second_symbol_position = 1;
         const size_t symbols_number = 1;
 
-        std::string filesystem_file_name(download_file_name);
+        std::string filesystem_file_name(UrlAddressToDownloadFileName(download_file_name));
 
         if(filesystem_file_name[2] == '_')
         {
@@ -95,8 +107,13 @@ namespace bbc_6_minute
         return download_file_name.substr(download_file_name.find_last_of('/') + 1);
     }
 
-    bool DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::IsFilesystemFileExist(const std::string& filesystem_file_name)
+    bool DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::IsFilesystemFileExist(std::filesystem::path& filesystem_file_name)
     {
-        return false;
+        filesystem_file_name = courses_path 
+            / courses_subdirs[static_cast<unsigned int>(current_course)] 
+            / CurrentUnit().GetCurrentUnitSubDirectory() 
+            / filesystem_file_name;
+
+        return std::filesystem::exists(filesystem_file_name);
     }
 }

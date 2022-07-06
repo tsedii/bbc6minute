@@ -25,7 +25,7 @@ namespace bbc_6_minute
 
         std::string UrlAddressToDownloadFileName(const std::string& url_address);
 
-        bool IsFilesystemFileExist(const std::string& filesystem_file_name);
+        bool IsFilesystemFileExist(std::filesystem::path& filesystem_file_name);
     };
     
 }

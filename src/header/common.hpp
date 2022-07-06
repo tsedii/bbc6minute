@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <map>
 #include <string>
 #include <filesystem>
 
@@ -15,13 +16,15 @@ namespace bbc_6_minute
 
     typedef std::vector<std::string> MediasAndTranscriptsUrlAddresses;
 
+    typedef std::map<std::string, std::filesystem::path> MissingFilesForDownload;
+
     const std::string lower_intermediate_course_url_address_begin{
         "https://www.bbc.co.uk/learningenglish/english/course/lower-intermediate/unit-"
     };
-    
+
     const std::string url_address_end{"/downloads"};
 
-    const std::filesystem::path courses_path{L"/home/dii/English/"};
+    const std::filesystem::path courses_path{L"/home/dii/English/Bbc6minute/"};
 
     const std::array<std::string, static_cast<unsigned int>(CurrentCourse::course_number)> 
         courses_subdirs {"LowerIntermediate", "Intermediate", "UpperIntermediate"};
