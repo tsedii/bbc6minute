@@ -1,9 +1,13 @@
-#include "supportingTools.hpp"
+#include "currentUnitDownloadCentrePageDownloader.hpp"
+#include "downloadCentrePageMediasAndTranscriptsUrlAddressesExtracter.hpp"
+#include "currentUnitMediasAndTranscriptsDownloader.hpp"
 
 
 int main()
 {
-    bbc_6_minute::DownloadCurrentUnitMediasAndTranscriptsUrlAddresses();
+    bbc_6_minute::CurrentUnitDownloadCentrePageDownloader().DownloadCurrentUnitDownloadCentrePage();
 
-    bbc_6_minute::CheckFilesExistenceOnFilesystem(bbc_6_minute::GetMediasAndTranscriptsUrlAddresses());
+    bbc_6_minute::DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter().ExtractDownloadCentrePageMediasAndTranscriptsUrlAddresses();
+
+    bbc_6_minute::CurrentUnitMediasAndTranscriptsDownloader().DownloadCurrentUnitMediasAndTranscripts();
 }

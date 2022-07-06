@@ -7,11 +7,11 @@
 
 namespace bbc_6_minute
 {
-    enum class CourseNumber {
+    enum class CurrentCourse {
         lower_intermediate = 1, intermediate, upper_intermediate
     };
 
-    const CourseNumber course_number = CourseNumber::lower_intermediate;
+    const CurrentCourse current_course = CurrentCourse::lower_intermediate;
 
     typedef std::vector<std::string> MediasAndTranscriptsUrlAddresses;
 
@@ -20,7 +20,7 @@ namespace bbc_6_minute
 
     const std::filesystem::path lower_intermediate_course_path{L"/home/dii/English/lowerIntermediate"};
 
-    const std::string medias_and_transcripts_url_addresses_file_name{"downloads"};
+    const std::string current_unit_download_centre_page_file_name{"downloads"};
 
     const std::string string_extract_file_name_template{"[^<]*<a href=\"([^\"]*)\">Download"};
 }

@@ -4,7 +4,8 @@ project( bbc6minute VERSION 0.1.0 )
 
 set( CMAKE_CXX_STANDARD 20 )
 
-set( SOURCE_FILES src/main.cpp src/source/currentUnitPageUrlAddress.cpp src/source/supportingTools.cpp )
+set( SOURCE_FILES src/main.cpp src/source/currentUnitDownloadCentrePageDownloader.cpp 
+    src/source/currentUnitMediasAndTranscriptsDownloader.cpp src/source/downloadCentrePageMediasAndTranscriptsUrlAddressesExtracter.cpp)
 
 include_directories( src/header/ )
 
