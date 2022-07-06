@@ -1,11 +1,9 @@
 #include "currentUnitDownloadCentrePageDownloader.hpp"
+#include "currentUnit.hpp"
 
 
 namespace bbc_6_minute
 {
-
-    unsigned int CurrentUnitDownloadCentrePageDownloader::download_page_number_ 
-        = static_cast<unsigned int>(current_course);
 
     std::string CurrentUnitDownloadCentrePageDownloader::GetWgetCommandLine()
     {
@@ -23,14 +21,9 @@ namespace bbc_6_minute
     std::string CurrentUnitDownloadCentrePageDownloader::GetUrlAddress()
     {
         return std::string(lower_intermediate_course_url_address_begin 
-            + std::to_string(GetUnitNumber())
+            + std::to_string(CurrentUnit().GetCurrentUnitNumber())
             + url_address_end
         );
-    }
-    
-    unsigned int CurrentUnitDownloadCentrePageDownloader::GetUnitNumber()
-    {
-        return download_page_number_++;
     }
 
 }

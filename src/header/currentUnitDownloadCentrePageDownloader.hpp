@@ -15,10 +15,6 @@ namespace bbc_6_minute
         std::string GetUrlAddress();
         std::string GetWgetCommandLine();
         std::string GetCurrentUnitDownloadCentrePageUrlAddress();
-        unsigned int GetUnitNumber();
-
-    private:
-        static unsigned int download_page_number_;
     };
 
 }

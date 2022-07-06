@@ -64,7 +64,9 @@ namespace bbc_6_minute
     {
         for(const auto& medias_and_transcripts_url_addresses_file_name : (*medias_and_transcripts_url_addresses_file_names_ptr))
         {
-            DownloadFileNameToFilesystemFileName(medias_and_transcripts_url_addresses_file_name);
+            std::string filesystem_file_name(DownloadFileNameToFilesystemFileName(medias_and_transcripts_url_addresses_file_name));
+
+            IsFilesystemFileExist(filesystem_file_name);
         }
     }
 
