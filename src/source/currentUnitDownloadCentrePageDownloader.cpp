@@ -1,21 +1,22 @@
 #include "currentUnitDownloadCentrePageDownloader.hpp"
 #include "currentUnit.hpp"
+#include "downloader.hpp"
 
 
 namespace bbc_6_minute
 {
 
-    std::string CurrentUnitDownloadCentrePageDownloader::GetWgetCommandLine()
-    {
-        return std::string("wget ") + GetUrlAddress();
-    }
-
     void CurrentUnitDownloadCentrePageDownloader::DownloadCurrentUnitDownloadCentrePage()
     {
-        if (!std::filesystem::exists(bbc_6_minute::current_unit_download_centre_page_file_name))
+        if (!std::filesystem::exists(current_unit_download_centre_page_file_name))
         {
-            std::system(GetWgetCommandLine().c_str());
+            Downloader(GetUrlAddress()).Download();
         }
+        /*
+        std::filesystem::remove(current_unit_download_centre_page_file_name);
+
+        CurrentUnit().NextCurrentUnit();
+        */
     }
 
     std::string CurrentUnitDownloadCentrePageDownloader::GetUrlAddress()

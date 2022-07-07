@@ -1,5 +1,7 @@
 #include "missingFiles.hpp"
 
+#include <iostream>
+
 
 namespace bbc_6_minute
 {
@@ -24,5 +26,35 @@ namespace bbc_6_minute
     }
     
     void MissingFiles::PrepareFilesystemForMissingFilesSaving()
-    {}
+    {
+        if (!missing_files_for_download_ptr_)
+        {
+            return;
+        }
+
+        if ((*missing_files_for_download_ptr_).empty())
+        {
+            return;
+        }
+        
+        std::set<std::filesystem::path> files_pathes;
+        
+        for (const auto& [url_addresses_file_name, filesystem_file_name] : (*missing_files_for_download_ptr_))
+        {
+            files_pathes.insert(std::filesystem::path(filesystem_file_name).remove_filename());
+        }
+
+        CreateMissingSubdirectories(files_pathes);
+    }
+
+    void MissingFiles::CreateMissingSubdirectories(const std::set<std::filesystem::path> missing_files_pathes)
+    {
+        for (const auto& missing_file_path : missing_files_pathes)
+        {
+            if (!std::filesystem::exists(missing_file_path))
+            {
+                std::filesystem::create_directories(missing_file_path);
+            }
+        } 
+    }
 }

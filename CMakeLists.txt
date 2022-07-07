@@ -11,6 +11,7 @@ set( SOURCE_FILES
     src/source/downloadCentrePageMediasAndTranscriptsUrlAddressesExtracter.cpp
     src/source/currentUnit.cpp
     src/source/missingFiles.cpp
+    src/source/downloader.cpp
 )
 
 include_directories( src/header/ )

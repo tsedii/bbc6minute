@@ -13,7 +13,6 @@ namespace bbc_6_minute
 
     private:
         std::string GetUrlAddress();
-        std::string GetWgetCommandLine();
         std::string GetCurrentUnitDownloadCentrePageUrlAddress();
     };
 

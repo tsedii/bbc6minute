@@ -1,17 +1,15 @@
 #include "currentUnitMediasAndTranscriptsDownloader.hpp"
 #include "missingFiles.hpp"
-#include <iostream>
+#include "downloader.hpp"
 
 
 namespace bbc_6_minute
 {
     void CurrentUnitMediasAndTranscriptsDownloader::DownloadCurrentUnitMediasAndTranscripts()
     {
-        for (const auto& [key, value] : (*(MissingFiles().GetMissingFiles())))
+        for (const auto& [url_addresses_file_name, filesystem_file_name] : (*(MissingFiles().GetMissingFiles())))
         {
-            std::cout << key << std::endl << value.string() << std::endl << std::endl;
+            Downloader(url_addresses_file_name, filesystem_file_name.string()).Download();
         }
-        
     }
-    
 }

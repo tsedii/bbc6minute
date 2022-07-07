@@ -17,17 +17,18 @@ namespace bbc_6_minute
     std::shared_ptr<MediasAndTranscriptsUrlAddresses> DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::GetMediasAndTranscriptsUrlAddresses()
     {
         std::string medias_and_transcripts_url_addresses_file_line;
-        std::ifstream medias_and_transcripts_url_addresses_file_stream(bbc_6_minute::current_unit_download_centre_page_file_name);
+        std::ifstream medias_and_transcripts_url_addresses_file_stream(current_unit_download_centre_page_file_name);
 
         std::shared_ptr<MediasAndTranscriptsUrlAddresses> medias_and_transcripts_url_addresses_ptr(std::make_shared<MediasAndTranscriptsUrlAddresses>());
 
-        std::regex regex_extract_file_name_template(bbc_6_minute::string_extract_file_name_template);
+        std::regex regex_extract_file_name_template(string_extract_file_name_template);
 
         try
         {
             while (std::getline(medias_and_transcripts_url_addresses_file_stream, medias_and_transcripts_url_addresses_file_line))
             {
-                if (!(medias_and_transcripts_url_addresses_file_line.find(".pdf") != std::string::npos or medias_and_transcripts_url_addresses_file_line.find(".mp3") != std::string::npos))
+                if (!(medias_and_transcripts_url_addresses_file_line.find(".pdf") != std::string::npos 
+                    or medias_and_transcripts_url_addresses_file_line.find(".mp3") != std::string::npos))
                 {
                     continue;
                 }

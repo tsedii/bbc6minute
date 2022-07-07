@@ -2,6 +2,8 @@
 
 #include "common.hpp"
 
+#include <set>
+
 
 namespace bbc_6_minute
 {
@@ -13,7 +15,9 @@ namespace bbc_6_minute
         
         std::shared_ptr<MissingFilesForDownload> GetMissingFiles();
 
+    private:
         void PrepareFilesystemForMissingFilesSaving();
+        void CreateMissingSubdirectories(const std::set<std::filesystem::path> missing_files_pathes);
 
     private:
         static std::shared_ptr<MissingFilesForDownload> missing_files_for_download_ptr_;
