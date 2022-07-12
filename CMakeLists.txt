@@ -10,8 +10,10 @@ set( SOURCE_FILES
     src/source/currentUnitMediasAndTranscriptsDownloader.cpp 
     src/source/downloadCentrePageMediasAndTranscriptsUrlAddressesExtracter.cpp
     src/source/currentUnit.cpp
+    src/source/currentCourse.cpp
     src/source/missingFiles.cpp
     src/source/downloader.cpp
+    src/source/pause.cpp
 )
 
 include_directories( src/header/ )

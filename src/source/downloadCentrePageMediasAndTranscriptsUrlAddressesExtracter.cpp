@@ -1,6 +1,7 @@
 #include "downloadCentrePageMediasAndTranscriptsUrlAddressesExtracter.hpp"
 #include "currentUnit.hpp"
 #include "missingFiles.hpp"
+#include "currentCourse.hpp"
 
 #include <fstream>
 #include <regex>
@@ -96,7 +97,7 @@ namespace bbc_6_minute
         }
 
         filesystem_file_name.insert(second_symbol_position - 1, symbols_number, '_');
-        filesystem_file_name.insert(second_symbol_position - 1, symbols_number, std::to_string(static_cast<unsigned int>(current_course))[0]);
+        filesystem_file_name.insert(second_symbol_position - 1, symbols_number, std::to_string(CurrentCourse().GetCurrentCourseIndex())[0]);
         filesystem_file_name.insert(second_symbol_position - 1, symbols_number, 'c');
 
         return filesystem_file_name;
@@ -110,8 +111,7 @@ namespace bbc_6_minute
 
     bool DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::IsFilesystemFileExist(std::filesystem::path& filesystem_file_name)
     {
-        filesystem_file_name = courses_path 
-            / courses_subdirs[static_cast<unsigned int>(current_course)] 
+        filesystem_file_name = *(CurrentCourse().GetCurrentCoursePath())
             / CurrentUnit().GetCurrentUnitSubDirectory() 
             / filesystem_file_name;
 
