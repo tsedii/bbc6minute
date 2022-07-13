@@ -8,7 +8,7 @@ namespace bbc_6_minute
 
     void CurrentUnitDownloadCentrePageDownloader::DownloadCurrentUnitDownloadCentrePage()
     {
-        if (!std::filesystem::exists(current_unit_download_centre_page_file_name))
+        if (!std::filesystem::exists(CurrentUnit().GetDownloadCentrePageFileName()))
         {
             Downloader(GetUrlAddress()).Download();
         }

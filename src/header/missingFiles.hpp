@@ -1,12 +1,14 @@
 #pragma once
 
-#include "common.hpp"
-
+#include <filesystem>
 #include <set>
+#include <map>
 
 
 namespace bbc_6_minute
 {
+    typedef std::map<std::string, std::filesystem::path> MissingFilesForDownload;
+
     class MissingFiles
     {
     public:

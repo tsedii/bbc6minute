@@ -8,6 +8,6 @@ namespace bbc_6_minute
 {
     void Pause::On()
     {
-        std::this_thread::sleep_for(std::chrono::seconds(10));
+        std::this_thread::sleep_for(std::chrono::seconds(pause_duration_));
     }
 }

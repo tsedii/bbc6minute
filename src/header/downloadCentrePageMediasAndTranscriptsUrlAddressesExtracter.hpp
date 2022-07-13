@@ -1,12 +1,13 @@
 #pragma once
 
-#include "common.hpp"
-
+#include <vector>
 #include <memory>
+#include <filesystem>
 
 
 namespace bbc_6_minute
 {
+    typedef std::vector<std::string> MediasAndTranscriptsUrlAddresses;
 
     class DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter
     {
@@ -26,6 +27,9 @@ namespace bbc_6_minute
         std::string UrlAddressToDownloadFileName(const std::string& url_address);
 
         bool IsFilesystemFileExist(std::filesystem::path& filesystem_file_name);
+
+    private:
+        const std::string string_extract_file_name_template_{"[^<]*<a href=\"([^\"]*)\">Download"};
     };
     
 }

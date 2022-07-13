@@ -18,11 +18,11 @@ namespace bbc_6_minute
     std::shared_ptr<MediasAndTranscriptsUrlAddresses> DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::GetMediasAndTranscriptsUrlAddresses()
     {
         std::string medias_and_transcripts_url_addresses_file_line;
-        std::ifstream medias_and_transcripts_url_addresses_file_stream(current_unit_download_centre_page_file_name);
+        std::ifstream medias_and_transcripts_url_addresses_file_stream(CurrentUnit().GetDownloadCentrePageFileName());
 
         std::shared_ptr<MediasAndTranscriptsUrlAddresses> medias_and_transcripts_url_addresses_ptr(std::make_shared<MediasAndTranscriptsUrlAddresses>());
 
-        std::regex regex_extract_file_name_template(string_extract_file_name_template);
+        std::regex regex_extract_file_name_template(string_extract_file_name_template_);
 
         try
         {
