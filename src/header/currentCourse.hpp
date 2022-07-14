@@ -30,6 +30,6 @@ namespace bbc_6_minute
         static std::vector<Course> courses_;
         static std::vector<Course>::const_iterator current_course_index_;
         const std::string url_address_end_{"/downloads"};
-        const std::filesystem::path courses_path_{L"/home/dii/English/Bbc6minute/"};
+        const std::filesystem::path courses_path_{L"/home/dii/fdv/English/Bbc6minute/"};
     };
 }

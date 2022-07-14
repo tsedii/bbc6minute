@@ -12,15 +12,20 @@ namespace bbc_6_minute
 {
     void DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::ExtractDownloadCentrePageMediasAndTranscriptsUrlAddresses()
     {
-        CheckFilesExistenceOnFilesystem(GetMediasAndTranscriptsUrlAddresses());
+        GetMediasAndTranscriptsUrlAddresses();
+
+        CheckFilesExistenceOnFilesystem();
     }
 
-    std::shared_ptr<MediasAndTranscriptsUrlAddresses> DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::GetMediasAndTranscriptsUrlAddresses()
+    void DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::GetMediasAndTranscriptsUrlAddresses()
     {
         std::string medias_and_transcripts_url_addresses_file_line;
         std::ifstream medias_and_transcripts_url_addresses_file_stream(CurrentUnit().GetDownloadCentrePageFileName());
 
-        std::shared_ptr<MediasAndTranscriptsUrlAddresses> medias_and_transcripts_url_addresses_ptr(std::make_shared<MediasAndTranscriptsUrlAddresses>());
+        if (!medias_and_transcripts_url_addresses_ptr_)
+        {
+            medias_and_transcripts_url_addresses_ptr_ = std::make_shared<MediasAndTranscriptsUrlAddresses>();
+        }
 
         std::regex regex_extract_file_name_template(string_extract_file_name_template_);
 
@@ -46,13 +51,11 @@ namespace bbc_6_minute
 
                 while (std::regex_search(search_start, medias_and_transcripts_url_addresses_file_line.cend(), match, regex_extract_file_name_template))
                 {
-                    medias_and_transcripts_url_addresses_ptr->push_back(match[1].str());
+                    medias_and_transcripts_url_addresses_ptr_->push_back(match[1].str());
                     search_start = match.suffix().first;
                 }
 
             }
-
-            return medias_and_transcripts_url_addresses_ptr;
         }
         catch(const std::exception& e)
         {
@@ -62,19 +65,22 @@ namespace bbc_6_minute
         {
             std::cerr << "Unknown error" << '\n';
         }
-
-        return nullptr;
     }
 
-    void DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::CheckFilesExistenceOnFilesystem(std::shared_ptr<MediasAndTranscriptsUrlAddresses> medias_and_transcripts_url_addresses_file_names_ptr)
+    void DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::CheckFilesExistenceOnFilesystem()
     {
-        if(!medias_and_transcripts_url_addresses_file_names_ptr)
+        if(!medias_and_transcripts_url_addresses_ptr_)
         {
             return;
         }
 
-        for(const auto& medias_and_transcripts_url_addresses_file_name : (*medias_and_transcripts_url_addresses_file_names_ptr))
+        for(const auto& medias_and_transcripts_url_addresses_file_name : (*medias_and_transcripts_url_addresses_ptr_))
         {
+            if (medias_and_transcripts_url_addresses_file_name.find(".mp4") != std::string::npos)
+            {
+                continue;
+            }
+            
             std::filesystem::path filesystem_file_name(DownloadFileNameToFilesystemFileName(medias_and_transcripts_url_addresses_file_name));
 
             if(!IsFilesystemFileExist(filesystem_file_name))
@@ -91,6 +97,12 @@ namespace bbc_6_minute
 
         std::string filesystem_file_name(UrlAddressToDownloadFileName(download_file_name));
 
+        if (filesystem_file_name[0] != 'u')
+        {
+            DeleteRedundantSymbols(filesystem_file_name);
+        }
+        
+
         if(filesystem_file_name[2] == '_')
         {
             filesystem_file_name.insert(second_symbol_position, symbols_number, '0');
@@ -105,8 +117,7 @@ namespace bbc_6_minute
 
     std::string DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::UrlAddressToDownloadFileName(const std::string& url_address)
     {
-        std::string download_file_name(url_address);
-        return download_file_name.substr(download_file_name.find_last_of('/') + 1);
+        return url_address.substr(url_address.find_last_of('/') + 1);
     }
 
     bool DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::IsFilesystemFileExist(std::filesystem::path& filesystem_file_name)
@@ -116,5 +127,18 @@ namespace bbc_6_minute
             / filesystem_file_name;
 
         return std::filesystem::exists(filesystem_file_name);
+    }
+
+    void DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::DeleteRedundantSymbols(std::string& filesystem_file_name)
+    {
+        unsigned int current_unit_number{CurrentUnit().GetCurrentUnitNumber()};
+
+        filesystem_file_name = std::regex_replace(filesystem_file_name, std::regex("^[b][^_]+_")
+        , (current_unit_number < 10) ? std::string("u0" + std::to_string(current_unit_number) + "_")
+        : std::string("u" + std::to_string(current_unit_number) + "_"));
+        
+        filesystem_file_name = std::regex_replace(filesystem_file_name, std::regex("^\\d+_")
+        , (current_unit_number < 10) ? std::string("u0" + std::to_string(current_unit_number) + "_")
+        : std::string("u" + std::to_string(current_unit_number) + "_"));
     }
 }

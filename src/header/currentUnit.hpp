@@ -12,9 +12,9 @@ namespace bbc_6_minute
         const std::string GetCurrentUnitSubDirectory();
         const std::string GetDownloadCentrePageFileName();
         bool Go();
+        unsigned int GetCurrentUnitNumber();
 
     private:
-        unsigned int GetCurrentUnitNumber();
         bool NextCurrentUnit();
 
     private:
