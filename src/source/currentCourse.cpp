@@ -9,16 +9,19 @@ namespace bbc_6_minute
         { 
           {
            "https://www.bbc.co.uk/learningenglish/english/course/lower-intermediate/unit-"
+        , "/downloads"
         , L"LowerIntermediate/"
         , 30
           }
         , {
            "https://www.bbc.co.uk/learningenglish/english/course/intermediate/unit-"
+        , "/downloads"
         , L"Intermediate/"
         , 30
           }
         , {
            "https://www.bbc.co.uk/learningenglish/english/course/upper-intermediate/unit-"
+        , "/downloads"
         , L"UpperIntermediate/"
         , 30
           }
@@ -40,7 +43,7 @@ namespace bbc_6_minute
     {
         return current_course_index_->url_addresses_begin_ 
             + std::to_string(current_unit_number) 
-            + url_address_end_;
+            + current_course_index_->url_address_end_;
     }
 
     const unsigned int CurrentCourse::GetMaximumUnitNumber()

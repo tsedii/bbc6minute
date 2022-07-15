@@ -30,9 +30,16 @@ namespace bbc_6_minute
 
         void DeleteRedundantSymbols(std::string& filesystem_file_name);
 
+        void AddCurrentUnitPrefix(std::string& filesystem_file_name);
+
+        void AddCurrentCoursePrefix(std::string& filesystem_file_name);
+
     private:
         std::shared_ptr<MediasAndTranscriptsUrlAddresses> medias_and_transcripts_url_addresses_ptr_{nullptr};
-        const std::string string_extract_file_name_template_{"[^<]*<a href=\"([^\"]*)\">Download"};
+        const std::vector<std::string> string_extract_file_name_templates_{
+            {"[^<]*<a href=\"([^\"]*)\">Download"}
+            , {"[^<]*<a class=\"download\" href=\"([^\"]*)\">"}
+        };
     };
     
 }
