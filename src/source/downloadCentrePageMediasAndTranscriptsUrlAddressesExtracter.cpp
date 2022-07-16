@@ -126,9 +126,13 @@ namespace bbc_6_minute
 
         filesystem_file_name = std::regex_replace(filesystem_file_name, std::regex("^\\d+_"), "_");
 
-        filesystem_file_name = std::regex_replace(filesystem_file_name, std::regex("_download."), ".");
+        filesystem_file_name = std::regex_replace(filesystem_file_name, std::regex("_download.*\\."), ".");
 
         filesystem_file_name = std::regex_replace(filesystem_file_name, std::regex("u\\d+_"), "_");
+
+        filesystem_file_name = std::regex_replace(filesystem_file_name, std::regex("U\\d+_"), "_");
+
+        filesystem_file_name = std::regex_replace(filesystem_file_name, std::regex("__"), "_");
     }
 
     void DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::AddCurrentUnitPrefix(std::string& filesystem_file_name)
