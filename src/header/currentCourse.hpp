@@ -11,6 +11,8 @@ namespace bbc_6_minute
     {
         std::string url_addresses_begin_;
         std::string url_address_end_;
+        std::string vocabulary_reference_url_;
+        std::string grammar_reference_url_;
         std::filesystem::path course_subdir_;
         unsigned int maximum_units_number_;
     };

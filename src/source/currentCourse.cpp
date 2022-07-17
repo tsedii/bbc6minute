@@ -10,18 +10,24 @@ namespace bbc_6_minute
           {
            "https://www.bbc.co.uk/learningenglish/english/course/lower-intermediate/unit-"
         , "/downloads"
+        , "/tab/vocabulary"
+        , "/tab/grammar"
         , L"LowerIntermediate/"
         , 30
           }
         , {
            "https://www.bbc.co.uk/learningenglish/english/course/intermediate/unit-"
         , "/downloads"
+        , "/tab/vocabulary"
+        , "/tab/grammar"
         , L"Intermediate/"
         , 30
           }
         , {
            "https://www.bbc.co.uk/learningenglish/english/course/upper-intermediate/unit-"
         , "/downloads"
+        , "/tab/vocabulary"
+        , "/tab/grammar"
         , L"UpperIntermediate/"
         , 30
           }
