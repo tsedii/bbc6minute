@@ -86,7 +86,9 @@ namespace bbc_6_minute
             
             std::filesystem::path filesystem_file_name(DownloadFileNameToFilesystemFileName(medias_and_transcripts_url_addresses_file_name));
 
-            if(!IsFilesystemFileExist(filesystem_file_name))
+            filesystem_file_name = *(CurrentUnit().GetFullFilesystemFileName(filesystem_file_name));
+
+            if(!CurrentUnit().IsFilesystemFileExist(filesystem_file_name))
             {
                 MissingFiles().SaveForDownload(medias_and_transcripts_url_addresses_file_name, filesystem_file_name);
             }
@@ -99,9 +101,9 @@ namespace bbc_6_minute
 
         DeleteRedundantSymbols(filesystem_file_name);
 
-        AddCurrentUnitPrefix(filesystem_file_name);
+        CurrentUnit().AddCurrentUnitPrefix(filesystem_file_name);
 
-        AddCurrentCoursePrefix(filesystem_file_name);
+        CurrentCourse().AddCurrentCoursePrefix(filesystem_file_name);
 
         return filesystem_file_name;
     }
@@ -109,15 +111,6 @@ namespace bbc_6_minute
     std::string DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::UrlAddressToDownloadFileName(const std::string& url_address)
     {
         return url_address.substr(url_address.find_last_of('/') + 1);
-    }
-
-    bool DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::IsFilesystemFileExist(std::filesystem::path& filesystem_file_name)
-    {
-        filesystem_file_name = *(CurrentCourse().GetCurrentCoursePath())
-            / CurrentUnit().GetCurrentUnitSubDirectory() 
-            / filesystem_file_name;
-
-        return std::filesystem::exists(filesystem_file_name);
     }
 
     void DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::DeleteRedundantSymbols(std::string& filesystem_file_name)
@@ -133,48 +126,5 @@ namespace bbc_6_minute
         filesystem_file_name = std::regex_replace(filesystem_file_name, std::regex("U\\d+_"), "_");
 
         filesystem_file_name = std::regex_replace(filesystem_file_name, std::regex("__"), "_");
-    }
-
-    void DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::AddCurrentUnitPrefix(std::string& filesystem_file_name)
-    {
-        const size_t first_symbol_position = 0;
-        const size_t symbols_number = 1;
-
-        const unsigned int current_unit_number{CurrentUnit().GetCurrentUnitNumber()};
-
-        if (filesystem_file_name[0] != '_')
-        {
-            filesystem_file_name.insert(first_symbol_position, symbols_number, '_');
-        }
-
-        if (current_unit_number < 10)
-        {
-            filesystem_file_name.insert(first_symbol_position, symbols_number, std::to_string(current_unit_number)[0]);
-            filesystem_file_name.insert(first_symbol_position, symbols_number, '0');
-        }
-        else
-        {
-            filesystem_file_name.insert(first_symbol_position, symbols_number, std::to_string(current_unit_number)[1]);
-            filesystem_file_name.insert(first_symbol_position, symbols_number, std::to_string(current_unit_number)[0]);
-        }
-        
-        filesystem_file_name.insert(first_symbol_position, symbols_number, 'u');
-    }
-
-    void DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::AddCurrentCoursePrefix(std::string& filesystem_file_name)
-    {
-        const size_t first_symbol_position = 0;
-        const size_t symbols_number = 1;
-
-        const unsigned int current_course_number{CurrentCourse().GetCurrentCourseIndex()};
-
-        if (filesystem_file_name[0] != '_')
-        {
-            filesystem_file_name.insert(first_symbol_position, symbols_number, '_');
-        }
-
-        filesystem_file_name.insert(first_symbol_position, symbols_number, std::to_string(current_course_number)[0]);
-        
-        filesystem_file_name.insert(first_symbol_position, symbols_number, 'c');
     }
 }

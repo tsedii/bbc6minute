@@ -52,6 +52,20 @@ namespace bbc_6_minute
             + current_course_index_->url_address_end_;
     }
 
+    std::string CurrentCourse::GetCurrentCourseVocabularyReferenceUrlAddress(unsigned int current_unit_number)
+    {
+        return current_course_index_->url_addresses_begin_ 
+            + std::to_string(current_unit_number) 
+            + current_course_index_->vocabulary_reference_url_;
+    }
+
+    std::string CurrentCourse::GetCurrentCourseGrammarReferenceUrlAddress(unsigned int current_unit_number)
+    {
+        return current_course_index_->url_addresses_begin_ 
+            + std::to_string(current_unit_number) 
+            + current_course_index_->grammar_reference_url_;
+    }
+
     const unsigned int CurrentCourse::GetMaximumUnitNumber()
     {
         return current_course_index_->maximum_units_number_;
@@ -60,6 +74,23 @@ namespace bbc_6_minute
     unsigned int CurrentCourse::GetCurrentCourseIndex()
     {
         return static_cast<unsigned int>(std::distance(courses_.cbegin(), current_course_index_));
+    }
+
+    void CurrentCourse::AddCurrentCoursePrefix(std::string& filesystem_file_name)
+    {
+        const size_t first_symbol_position = 0;
+        const size_t symbols_number = 1;
+
+        const unsigned int current_course_number{CurrentCourse().GetCurrentCourseIndex()};
+
+        if (filesystem_file_name[0] != '_')
+        {
+            filesystem_file_name.insert(first_symbol_position, symbols_number, '_');
+        }
+
+        filesystem_file_name.insert(first_symbol_position, symbols_number, std::to_string(current_course_number)[0]);
+        
+        filesystem_file_name.insert(first_symbol_position, symbols_number, 'c');
     }
 
     bool CurrentCourse::NextCourse()

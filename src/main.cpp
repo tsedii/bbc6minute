@@ -3,7 +3,7 @@
 #include "currentUnitDownloadCentrePageDownloader.hpp"
 #include "downloadCentrePageMediasAndTranscriptsUrlAddressesExtracter.hpp"
 #include "currentUnitMediasAndTranscriptsDownloader.hpp"
-#include "currentUnitVocabularyAndGrammaReferenceDownloader.hpp"
+#include "currentUnitVocabularyAndGrammarReferenceDownloader.hpp"
 
 
 int main()
@@ -21,8 +21,8 @@ int main()
             bbc_6_minute::CurrentUnitMediasAndTranscriptsDownloader()
                 .DownloadCurrentUnitMediasAndTranscripts();
 
-            bbc_6_minute::CurrentUnitVocabularyAndGrammaReferenceDownloader()
-                .DownloadCurrentUnitVocabularyAndGrammaReference();
+            bbc_6_minute::CurrentUnitVocabularyAndGrammarReferenceDownloader()
+                .DownloadCurrentUnitVocabularyAndGrammarReference();
         }
     }
 }

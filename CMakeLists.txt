@@ -14,7 +14,7 @@ set( SOURCE_FILES
     src/source/missingFiles.cpp
     src/source/downloader.cpp
     src/source/pause.cpp
-    src/source/currentUnitVocabularyAndGrammaReferenceDownloader.cpp
+    src/source/currentUnitVocabularyAndGrammarReferenceDownloader.cpp
 )
 
 include_directories( src/header/ )

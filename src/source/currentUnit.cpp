@@ -31,6 +31,46 @@ namespace bbc_6_minute
         return current_unit_download_centre_page_file_name_;
     }
 
+    void CurrentUnit::AddCurrentUnitPrefix(std::string& filesystem_file_name)
+    {
+        const size_t first_symbol_position = 0;
+        const size_t symbols_number = 1;
+
+        const unsigned int current_unit_number{CurrentUnit().GetCurrentUnitNumber()};
+
+        if (filesystem_file_name[0] != '_')
+        {
+            filesystem_file_name.insert(first_symbol_position, symbols_number, '_');
+        }
+
+        if (current_unit_number < 10)
+        {
+            filesystem_file_name.insert(first_symbol_position, symbols_number, std::to_string(current_unit_number)[0]);
+            filesystem_file_name.insert(first_symbol_position, symbols_number, '0');
+        }
+        else
+        {
+            filesystem_file_name.insert(first_symbol_position, symbols_number, std::to_string(current_unit_number)[1]);
+            filesystem_file_name.insert(first_symbol_position, symbols_number, std::to_string(current_unit_number)[0]);
+        }
+        
+        filesystem_file_name.insert(first_symbol_position, symbols_number, 'u');
+    }
+
+    std::shared_ptr<std::filesystem::path> CurrentUnit::GetFullFilesystemFileName(const std::filesystem::path& filesystem_file_name)
+    {
+        return std::make_shared<std::filesystem::path>(
+            *(CurrentCourse().GetCurrentCoursePath())
+            / CurrentUnit().GetCurrentUnitSubDirectory() 
+            / filesystem_file_name
+        );
+    }
+
+    bool CurrentUnit::IsFilesystemFileExist(const std::filesystem::path& filesystem_file_name)
+    {
+        return std::filesystem::exists(filesystem_file_name);
+    }
+
     bool CurrentUnit::NextCurrentUnit()
     {
         if ( current_unit_number_ == CurrentCourse().GetMaximumUnitNumber() )

@@ -10,7 +10,8 @@ namespace bbc_6_minute
     
     void Downloader::Download()
     {
-        std::system(std::string(downloader_ 
+        std::system(std::string(
+            downloader_ 
             + (filesystem_file_name_.empty() ? std::string("") : std::string("-O ") + filesystem_file_name_ + " ")
             + url_addresses_
         ).c_str());

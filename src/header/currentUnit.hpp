@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <filesystem>
 
 
 namespace bbc_6_minute
@@ -13,6 +14,9 @@ namespace bbc_6_minute
         const std::string GetDownloadCentrePageFileName();
         bool Go();
         unsigned int GetCurrentUnitNumber();
+        void AddCurrentUnitPrefix(std::string& filesystem_file_name);
+        std::shared_ptr<std::filesystem::path> GetFullFilesystemFileName(const std::filesystem::path& filesystem_file_name);
+        bool IsFilesystemFileExist(const std::filesystem::path& filesystem_file_name);
 
     private:
         bool NextCurrentUnit();

@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <memory>
-#include <filesystem>
 
 
 namespace bbc_6_minute
@@ -26,13 +25,7 @@ namespace bbc_6_minute
 
         std::string UrlAddressToDownloadFileName(const std::string& url_address);
 
-        bool IsFilesystemFileExist(std::filesystem::path& filesystem_file_name);
-
         void DeleteRedundantSymbols(std::string& filesystem_file_name);
-
-        void AddCurrentUnitPrefix(std::string& filesystem_file_name);
-
-        void AddCurrentCoursePrefix(std::string& filesystem_file_name);
 
     private:
         std::shared_ptr<MediasAndTranscriptsUrlAddresses> medias_and_transcripts_url_addresses_ptr_{nullptr};
