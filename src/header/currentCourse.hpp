@@ -30,6 +30,7 @@ namespace bbc_6_minute
         const unsigned int GetMaximumUnitNumber();
         unsigned int GetCurrentCourseIndex();
         void AddCurrentCoursePrefix(std::string& filesystem_file_name);
+        bool IsThereAnyCourse();
         bool NextCourse();
     
     private:

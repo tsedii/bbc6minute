@@ -93,6 +93,18 @@ namespace bbc_6_minute
         filesystem_file_name.insert(first_symbol_position, symbols_number, 'c');
     }
 
+    bool CurrentCourse::IsThereAnyCourse()
+    {
+        if (current_course_index_ == courses_.cend())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     bool CurrentCourse::NextCourse()
     {
         if (current_course_index_ == courses_.cend())
