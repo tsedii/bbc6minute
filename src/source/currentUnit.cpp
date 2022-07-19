@@ -73,11 +73,6 @@ namespace bbc_6_minute
 
     bool CurrentUnit::NextCurrentUnit()
     {
-        if (!CurrentCourse().IsThereAnyCourse())
-        {
-            return false;
-        }
-        
         if ( current_unit_number_ == CurrentCourse().GetMaximumUnitNumber() )
         {
             current_unit_number_ = 0;

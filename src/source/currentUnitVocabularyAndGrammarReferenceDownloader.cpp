@@ -52,13 +52,17 @@ namespace bbc_6_minute
             vocabulary_and_gramma_references_attributes_ptr_ = std::make_unique<VocabularyAndGrammaReferencesAttributes>();
         }
         
-        if (!CurrentUnit().IsFilesystemFileExist(*(GetReferenceFilesystemFilename("VocabularyReference.pdf"))))
+        if (!CurrentUnit().IsFilesystemFileExist(*(GetReferenceFilesystemFilename("VocabularyReference.pdf")))
+            and !((*(GetVocabularyReferenceUrlAddress())).empty())
+        )
         {
             (*vocabulary_and_gramma_references_attributes_ptr_)[*(GetVocabularyReferenceUrlAddress())] 
                 = *(GetReferenceFilesystemFilename("VocabularyReference.pdf"));
         }
         
-        if (!CurrentUnit().IsFilesystemFileExist(*(GetReferenceFilesystemFilename("GrammarReference.pdf"))))
+        if (!CurrentUnit().IsFilesystemFileExist(*(GetReferenceFilesystemFilename("GrammarReference.pdf")))
+            and !((*(GetGrammarReferenceUrlAddress())).empty())
+        )
         {
             (*vocabulary_and_gramma_references_attributes_ptr_)[*(GetGrammarReferenceUrlAddress())] 
                 = *(GetReferenceFilesystemFilename("GrammarReference.pdf"));
