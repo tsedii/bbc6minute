@@ -2,6 +2,11 @@
 #include "currentCourse.hpp"
 #include "missingFiles.hpp"
 
+#include "currentUnitDownloadCentrePageDownloader.hpp"
+#include "downloadCentrePageMediasAndTranscriptsUrlAddressesExtracter.hpp"
+#include "currentUnitMediasAndTranscriptsDownloader.hpp"
+#include "currentUnitVocabularyAndGrammarReferenceDownloader.hpp"
+
 
 namespace bbc_6_minute
 {
@@ -69,6 +74,24 @@ namespace bbc_6_minute
     bool CurrentUnit::IsFilesystemFileExist(const std::filesystem::path& filesystem_file_name)
     {
         return std::filesystem::exists(filesystem_file_name);
+    }
+
+    void CurrentUnit::DownloadCourseWithUnits()
+    {
+        while (Go())
+        {
+            CurrentUnitDownloadCentrePageDownloader()
+                .DownloadCurrentUnitDownloadCentrePage();
+
+            DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter()
+                .ExtractDownloadCentrePageMediasAndTranscriptsUrlAddresses();
+
+            CurrentUnitMediasAndTranscriptsDownloader()
+                .DownloadCurrentUnitMediasAndTranscripts();
+
+            CurrentUnitVocabularyAndGrammarReferenceDownloader()
+                .DownloadCurrentUnitVocabularyAndGrammarReference();
+        }
     }
 
     bool CurrentUnit::NextCurrentUnit()

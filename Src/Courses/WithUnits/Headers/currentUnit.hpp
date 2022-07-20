@@ -17,6 +17,7 @@ namespace bbc_6_minute
         void AddCurrentUnitPrefix(std::string& filesystem_file_name);
         std::shared_ptr<std::filesystem::path> GetFullFilesystemFileName(const std::filesystem::path& filesystem_file_name);
         bool IsFilesystemFileExist(const std::filesystem::path& filesystem_file_name);
+        void DownloadCourseWithUnits();
 
     private:
         bool NextCurrentUnit();
