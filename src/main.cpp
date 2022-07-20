@@ -6,23 +6,32 @@
 #include "currentUnitVocabularyAndGrammarReferenceDownloader.hpp"
 
 
+namespace bbc_6_minute
+{
+    void DownloadCoursesWithUnits()
+    {
+        while (CurrentUnit().Go())
+        {
+            CurrentUnitDownloadCentrePageDownloader()
+                .DownloadCurrentUnitDownloadCentrePage();
+
+            DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter()
+                .ExtractDownloadCentrePageMediasAndTranscriptsUrlAddresses();
+
+            CurrentUnitMediasAndTranscriptsDownloader()
+                .DownloadCurrentUnitMediasAndTranscripts();
+
+            CurrentUnitVocabularyAndGrammarReferenceDownloader()
+                .DownloadCurrentUnitVocabularyAndGrammarReference();
+        }
+    }
+}
+
+
 int main()
 {
     while (bbc_6_minute::CurrentCourse().Go())
     {
-        while (bbc_6_minute::CurrentUnit().Go())
-        {
-            bbc_6_minute::CurrentUnitDownloadCentrePageDownloader()
-                .DownloadCurrentUnitDownloadCentrePage();
-
-            bbc_6_minute::DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter()
-                .ExtractDownloadCentrePageMediasAndTranscriptsUrlAddresses();
-
-            bbc_6_minute::CurrentUnitMediasAndTranscriptsDownloader()
-                .DownloadCurrentUnitMediasAndTranscripts();
-
-            bbc_6_minute::CurrentUnitVocabularyAndGrammarReferenceDownloader()
-                .DownloadCurrentUnitVocabularyAndGrammarReference();
-        }
+        bbc_6_minute::DownloadCoursesWithUnits();
     }
 }
