@@ -8,7 +8,7 @@
 
 namespace bbc_6_minute
 {
-    void DownloadCoursesWithUnits()
+    void DownloadCourseWithUnits()
     {
         while (CurrentUnit().Go())
         {
@@ -25,6 +25,9 @@ namespace bbc_6_minute
                 .DownloadCurrentUnitVocabularyAndGrammarReference();
         }
     }
+
+    void DownloadCourseWithoutUnits()
+    {}
 }
 
 
@@ -32,6 +35,7 @@ int main()
 {
     while (bbc_6_minute::CurrentCourse().Go())
     {
-        bbc_6_minute::DownloadCoursesWithUnits();
+        bbc_6_minute::DownloadCourseWithUnits();
+        bbc_6_minute::DownloadCourseWithoutUnits();
     }
 }

@@ -87,6 +87,11 @@ namespace bbc_6_minute
 
     bool CurrentUnit::Go()
     {
+        if (!CurrentCourse().IsThisCourseWithUnits())
+        {
+            return false;
+        }
+        
         if (std::filesystem::exists(current_unit_download_centre_page_file_name_))
         {
             std::filesystem::remove(current_unit_download_centre_page_file_name_);
@@ -97,6 +102,6 @@ namespace bbc_6_minute
             (MissingFiles().GetMissingFiles())->clear();
         }
 
-        return CurrentUnit().NextCurrentUnit();
+        return NextCurrentUnit();
     }
 }

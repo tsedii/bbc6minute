@@ -65,7 +65,7 @@ namespace bbc_6_minute
         , L"6Newsreview/"
         , 21
         , 6
-        , true
+        , false
           }
         , {
           "https://www.bbc.co.uk/learningenglish/english/features/6-minute-english"
@@ -75,7 +75,7 @@ namespace bbc_6_minute
         , L"7sixMinuteEnglish/"
         , 0
         , 7
-        , false
+        , true
           }
         };
 
@@ -136,7 +136,7 @@ namespace bbc_6_minute
         const size_t first_symbol_position = 0;
         const size_t symbols_number = 1;
 
-        const unsigned int current_course_number{CurrentCourse().GetCurrentCourseNumber()};
+        const unsigned int current_course_number{GetCurrentCourseNumber()};
 
         if (filesystem_file_name[0] != '_')
         {
@@ -146,6 +146,18 @@ namespace bbc_6_minute
         filesystem_file_name.insert(first_symbol_position, symbols_number, std::to_string(current_course_number)[0]);
         
         filesystem_file_name.insert(first_symbol_position, symbols_number, 'c');
+    }
+
+    bool CurrentCourse::IsThisCourseWithUnits()
+    {
+      if (GetCurrentCourseNumber())
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     }
 
     bool CurrentCourse::IsCurrentCourseNeedForDownload()

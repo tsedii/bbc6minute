@@ -32,6 +32,7 @@ namespace bbc_6_minute
         const unsigned int GetMaximumUnitNumber();
         unsigned int GetCurrentCourseNumber();
         void AddCurrentCoursePrefix(std::string& filesystem_file_name);
+        bool IsThisCourseWithUnits();
 
     private:
         bool IsCurrentCourseNeedForDownload();
