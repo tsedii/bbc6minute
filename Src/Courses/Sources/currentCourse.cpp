@@ -69,7 +69,7 @@ namespace bbc_6_minute
           }
         , {
           "https://www.bbc.co.uk/learningenglish/english/features/6-minute-english"
-        , "/"
+        , ""
         , ""
         , ""
         , L"7sixMinuteEnglish/"
@@ -92,8 +92,8 @@ namespace bbc_6_minute
 
     std::string CurrentCourse::GetCurrentCourseDownloadCentrePageUrlAddress(unsigned int current_unit_number)
     {
-        return current_course_index_->url_addresses_begin_ 
-            + std::to_string(current_unit_number) 
+        return current_course_index_->url_addresses_begin_
+            + ((current_unit_number != 0) ? std::to_string(current_unit_number) : std::string(""))
             + current_course_index_->url_address_end_;
     }
 

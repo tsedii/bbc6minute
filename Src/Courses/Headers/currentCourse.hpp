@@ -26,7 +26,7 @@ namespace bbc_6_minute
         
         bool Go();
         std::shared_ptr<std::filesystem::path> GetCurrentCoursePath();
-        std::string GetCurrentCourseDownloadCentrePageUrlAddress(unsigned int current_unit_number);
+        std::string GetCurrentCourseDownloadCentrePageUrlAddress(unsigned int current_unit_number = 0);
         std::string GetCurrentCourseVocabularyReferenceUrlAddress(unsigned int current_unit_number);
         std::string GetCurrentCourseGrammarReferenceUrlAddress(unsigned int current_unit_number);
         const unsigned int GetMaximumUnitNumber();

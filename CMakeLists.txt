@@ -16,6 +16,8 @@ set( SOURCE_FILES
     Src/Courses/WithUnits/Sources/currentUnit.cpp
     Src/Courses/WithUnits/Sources/currentUnitVocabularyAndGrammarReferenceDownloader.cpp
     Src/Courses/Unitless/Sources/unitless.cpp
+    Src/Courses/Unitless/Sources/mediasAndTranscriptsPagesUrlAddressesPageDownloader.cpp
+    Src/Courses/Unitless/Sources/mediasAndTranscriptsPagesUrlAddressesExtracter.cpp
 )
 
 include_directories( 
