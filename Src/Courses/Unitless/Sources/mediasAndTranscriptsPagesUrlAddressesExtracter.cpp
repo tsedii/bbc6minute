@@ -4,15 +4,27 @@
 #include <fstream>
 #include <regex>
 
+#include "mediasAndTranscriptsPagesUrlAddressesPageDownloader.hpp"
+
 
 namespace bbc_6_minute
 {
+    std::shared_ptr<MediasAndTranscriptsPagesUrlAddresses> MediasAndTranscriptsPagesUrlAddressesExtracter::
+        medias_and_transcripts_pages_url_addresses_ptr_ = nullptr;
+
     void MediasAndTranscriptsPagesUrlAddressesExtracter::ExtractMediasAndTranscriptsPagesUrlAddresses()
     {
-        GetMediasAndTranscriptsPagesUrlAddresses();
+        SaveMediasAndTranscriptsPagesUrlAddresses();
+        OutputMediasAndTranscriptsPagesUrlAddresses();
     }
 
-    void MediasAndTranscriptsPagesUrlAddressesExtracter::GetMediasAndTranscriptsPagesUrlAddresses()
+    std::shared_ptr<MediasAndTranscriptsPagesUrlAddresses> MediasAndTranscriptsPagesUrlAddressesExtracter::
+        GetMediasAndTranscriptsPagesUrlAddresses()
+    {
+        return medias_and_transcripts_pages_url_addresses_ptr_;
+    }
+
+    void MediasAndTranscriptsPagesUrlAddressesExtracter::SaveMediasAndTranscriptsPagesUrlAddresses()
     {
         std::shared_ptr<std::ifstream> medias_and_transcripts_url_addresses_file_stream_ptr 
             = GetMediasAndTranscriptsUrlAddressesFileStream();
@@ -22,9 +34,9 @@ namespace bbc_6_minute
             return;
         }
         
-        if (!medias_and_transcripts_url_addresses_ptr_)
+        if (!medias_and_transcripts_pages_url_addresses_ptr_)
         {
-            medias_and_transcripts_url_addresses_ptr_ = std::make_shared<MediasAndTranscriptsUrlAddresses>();
+            medias_and_transcripts_pages_url_addresses_ptr_ = std::make_shared<MediasAndTranscriptsPagesUrlAddresses>();
         }
 
         std::string medias_and_transcripts_url_addresses_file_line;
@@ -33,8 +45,7 @@ namespace bbc_6_minute
         {
             while (std::getline(*medias_and_transcripts_url_addresses_file_stream_ptr, medias_and_transcripts_url_addresses_file_line))
             {
-                if (!(medias_and_transcripts_url_addresses_file_line.find(".pdf") != std::string::npos 
-                    or medias_and_transcripts_url_addresses_file_line.find(".mp3") != std::string::npos))
+                if (medias_and_transcripts_url_addresses_file_line.find("/6-minute-english") == std::string::npos)
                 {
                     continue;
                 }
@@ -55,7 +66,7 @@ namespace bbc_6_minute
 
                     while (std::regex_search(search_start, medias_and_transcripts_url_addresses_file_line.cend(), match, regex_extract_file_name_template))
                     {
-                        medias_and_transcripts_url_addresses_ptr_->insert(match[1].str());
+                        medias_and_transcripts_pages_url_addresses_ptr_->insert(match[1].str());
                         search_start = match.suffix().first;
                     }
                 }
@@ -72,18 +83,15 @@ namespace bbc_6_minute
         }
     }
 
-    std::shared_ptr<std::string> MediasAndTranscriptsPagesUrlAddressesExtracter::GetMediasAndTranscriptsUrlAddressesFileName()
-    {
-        return std::make_shared<std::string>(medias_and_transcripts_url_addresses_file_name_);
-    }
-
     std::shared_ptr<std::ifstream> MediasAndTranscriptsPagesUrlAddressesExtracter::GetMediasAndTranscriptsUrlAddressesFileStream()
     {
         std::shared_ptr<std::ifstream> medias_and_transcripts_url_addresses_file_stream_ptr;
 
         try
         {
-            medias_and_transcripts_url_addresses_file_stream_ptr = std::make_shared<std::ifstream>(*(GetMediasAndTranscriptsUrlAddressesFileName()));
+            medias_and_transcripts_url_addresses_file_stream_ptr = std::make_shared<std::ifstream>(
+                *(MediasAndTranscriptsPagesUrlAddressesPageDownloader().GetMediasAndTranscriptsPagesUrlAddressesPageFilename())
+            );
         }
         catch(const std::exception& e)
         {
@@ -96,5 +104,22 @@ namespace bbc_6_minute
         }
         
         return medias_and_transcripts_url_addresses_file_stream_ptr;
+    }
+
+    void MediasAndTranscriptsPagesUrlAddressesExtracter::OutputMediasAndTranscriptsPagesUrlAddresses()
+    {
+        if (!medias_and_transcripts_pages_url_addresses_ptr_)
+        {
+            return;
+        }
+
+        std::cout << "OutputMediasAndTranscriptsPagesUrlAddresses: " << std::endl << std::endl;
+
+        for (auto const& medias_and_transcripts_pages_url_address : *medias_and_transcripts_pages_url_addresses_ptr_)
+        {
+            std::cout << medias_and_transcripts_pages_url_address << std::endl;
+        }
+        
+        
     }
 }

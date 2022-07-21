@@ -8,24 +8,23 @@
 
 namespace bbc_6_minute
 {
-    typedef std::set<std::string> MediasAndTranscriptsUrlAddresses;
+    typedef std::set<std::string> MediasAndTranscriptsPagesUrlAddresses;
 
     class MediasAndTranscriptsPagesUrlAddressesExtracter
     {
     public:
         void ExtractMediasAndTranscriptsPagesUrlAddresses();
+        std::shared_ptr<MediasAndTranscriptsPagesUrlAddresses> GetMediasAndTranscriptsPagesUrlAddresses();
 
     private:
-        void GetMediasAndTranscriptsPagesUrlAddresses();
-        std::shared_ptr<std::string> GetMediasAndTranscriptsUrlAddressesFileName();
+        void SaveMediasAndTranscriptsPagesUrlAddresses();
         std::shared_ptr<std::ifstream> GetMediasAndTranscriptsUrlAddressesFileStream();
+        void OutputMediasAndTranscriptsPagesUrlAddresses();
 
     private:
-        const std::string medias_and_transcripts_url_addresses_file_name_{"6-minute-english"};
-        std::shared_ptr<MediasAndTranscriptsUrlAddresses> medias_and_transcripts_url_addresses_ptr_{nullptr};
+        static std::shared_ptr<MediasAndTranscriptsPagesUrlAddresses> medias_and_transcripts_pages_url_addresses_ptr_;
         const std::vector<std::string> string_extract_file_name_templates_{
-            {"[^<]*<a href=\"([^\"]*)\">Download"}
-            , {"[^<]*<a class=\"download\" href=\"([^\"]*)\">"}
+            {"data-feature-item=\"([^\"]*)\" class=\"progress-enabled"}
         };
     };
 }

@@ -20,4 +20,10 @@ namespace bbc_6_minute
             , url_addresses_page_file_name_
         ).Download();
     }
+
+    std::shared_ptr<std::string> MediasAndTranscriptsPagesUrlAddressesPageDownloader::
+        GetMediasAndTranscriptsPagesUrlAddressesPageFilename()
+    {
+        return std::make_shared<std::string>(url_addresses_page_file_name_);
+    }
 }
