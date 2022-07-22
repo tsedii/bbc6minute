@@ -150,7 +150,7 @@ namespace bbc_6_minute
 
     bool CurrentCourse::IsThisCourseWithUnits()
     {
-      if (GetCurrentCourseNumber())
+      if (GetMaximumUnitNumber())
       {
         return true;
       }

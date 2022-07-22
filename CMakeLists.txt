@@ -18,6 +18,7 @@ set( SOURCE_FILES
     Src/Courses/Unitless/Sources/unitless.cpp
     Src/Courses/Unitless/Sources/mediasAndTranscriptsPagesUrlAddressesPageDownloader.cpp
     Src/Courses/Unitless/Sources/mediasAndTranscriptsPagesUrlAddressesExtracter.cpp
+    Src/Courses/Unitless/Sources/mediasAndTranscriptsUrlAddressesPagesDownloader.cpp
 )
 
 include_directories( 

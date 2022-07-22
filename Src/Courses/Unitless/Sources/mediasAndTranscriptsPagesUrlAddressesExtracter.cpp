@@ -15,7 +15,6 @@ namespace bbc_6_minute
     void MediasAndTranscriptsPagesUrlAddressesExtracter::ExtractMediasAndTranscriptsPagesUrlAddresses()
     {
         SaveMediasAndTranscriptsPagesUrlAddresses();
-        OutputMediasAndTranscriptsPagesUrlAddresses();
     }
 
     std::shared_ptr<MediasAndTranscriptsPagesUrlAddresses> MediasAndTranscriptsPagesUrlAddressesExtracter::
@@ -104,22 +103,5 @@ namespace bbc_6_minute
         }
         
         return medias_and_transcripts_url_addresses_file_stream_ptr;
-    }
-
-    void MediasAndTranscriptsPagesUrlAddressesExtracter::OutputMediasAndTranscriptsPagesUrlAddresses()
-    {
-        if (!medias_and_transcripts_pages_url_addresses_ptr_)
-        {
-            return;
-        }
-
-        std::cout << "OutputMediasAndTranscriptsPagesUrlAddresses: " << std::endl << std::endl;
-
-        for (auto const& medias_and_transcripts_pages_url_address : *medias_and_transcripts_pages_url_addresses_ptr_)
-        {
-            std::cout << medias_and_transcripts_pages_url_address << std::endl;
-        }
-        
-        
     }
 }
