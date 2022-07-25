@@ -19,12 +19,14 @@ set( SOURCE_FILES
     Src/Courses/Unitless/Sources/mediasAndTranscriptsPagesUrlAddressesPageDownloader.cpp
     Src/Courses/Unitless/Sources/mediasAndTranscriptsPagesUrlAddressesExtracter.cpp
     Src/Courses/Unitless/Sources/mediasAndTranscriptsUrlAddressesPagesDownloader.cpp
+    Src/Utils/Sources/utils.cpp
 )
 
 include_directories( 
     Src/Courses/Headers/
     Src/Courses/WithUnits/Headers/
     Src/Courses/Unitless/Headers/
+    Src/Utils/Headers/
 )
 
 add_executable( ${PROJECT_NAME} ${SOURCE_FILES} )

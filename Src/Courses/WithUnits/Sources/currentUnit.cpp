@@ -76,24 +76,6 @@ namespace bbc_6_minute
         return std::filesystem::exists(filesystem_file_name);
     }
 
-    void CurrentUnit::DownloadCourseWithUnits()
-    {
-        while (Go())
-        {
-            CurrentUnitDownloadCentrePageDownloader()
-                .DownloadCurrentUnitDownloadCentrePage();
-
-            DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter()
-                .ExtractDownloadCentrePageMediasAndTranscriptsUrlAddresses();
-
-            CurrentUnitMediasAndTranscriptsDownloader()
-                .DownloadCurrentUnitMediasAndTranscripts();
-
-            CurrentUnitVocabularyAndGrammarReferenceDownloader()
-                .DownloadCurrentUnitVocabularyAndGrammarReference();
-        }
-    }
-
     bool CurrentUnit::NextCurrentUnit()
     {
         if ( current_unit_number_ == CurrentCourse().GetMaximumUnitNumber() )
@@ -126,5 +108,23 @@ namespace bbc_6_minute
         }
 
         return NextCurrentUnit();
+    }
+
+    void CurrentUnit::DownloadCourseWithUnits()
+    {
+        while (Go())
+        {
+            CurrentUnitDownloadCentrePageDownloader()
+                .DownloadCurrentUnitDownloadCentrePage();
+
+            DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter()
+                .ExtractDownloadCentrePageMediasAndTranscriptsUrlAddresses();
+
+            CurrentUnitMediasAndTranscriptsDownloader()
+                .DownloadCurrentUnitMediasAndTranscripts();
+
+            CurrentUnitVocabularyAndGrammarReferenceDownloader()
+                .DownloadCurrentUnitVocabularyAndGrammarReference();
+        }
     }
 }

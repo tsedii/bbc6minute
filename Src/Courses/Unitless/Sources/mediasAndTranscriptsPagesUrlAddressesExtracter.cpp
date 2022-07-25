@@ -5,6 +5,7 @@
 #include <regex>
 
 #include "mediasAndTranscriptsPagesUrlAddressesPageDownloader.hpp"
+#include "utils.hpp"
 
 
 namespace bbc_6_minute
@@ -26,7 +27,11 @@ namespace bbc_6_minute
     void MediasAndTranscriptsPagesUrlAddressesExtracter::SaveMediasAndTranscriptsPagesUrlAddresses()
     {
         std::shared_ptr<std::ifstream> medias_and_transcripts_url_addresses_file_stream_ptr 
-            = GetMediasAndTranscriptsUrlAddressesFileStream();
+            = utils::GetFileStream(
+                *(MediasAndTranscriptsPagesUrlAddressesPageDownloader()
+                    .GetMediasAndTranscriptsPagesUrlAddressesPageFilename()
+                )
+            );
         
         if (!medias_and_transcripts_url_addresses_file_stream_ptr)
         {
@@ -80,28 +85,5 @@ namespace bbc_6_minute
         {
             std::cerr << "Unknown error" << '\n';
         }
-    }
-
-    std::shared_ptr<std::ifstream> MediasAndTranscriptsPagesUrlAddressesExtracter::GetMediasAndTranscriptsUrlAddressesFileStream()
-    {
-        std::shared_ptr<std::ifstream> medias_and_transcripts_url_addresses_file_stream_ptr;
-
-        try
-        {
-            medias_and_transcripts_url_addresses_file_stream_ptr = std::make_shared<std::ifstream>(
-                *(MediasAndTranscriptsPagesUrlAddressesPageDownloader().GetMediasAndTranscriptsPagesUrlAddressesPageFilename())
-            );
-        }
-        catch(const std::exception& e)
-        {
-            std::cerr << e.what() << '\n';
-            return nullptr;
-        }
-        catch(...)
-        {
-            return nullptr;
-        }
-        
-        return medias_and_transcripts_url_addresses_file_stream_ptr;
     }
 }

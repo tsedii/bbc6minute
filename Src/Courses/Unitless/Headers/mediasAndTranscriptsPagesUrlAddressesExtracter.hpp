@@ -18,7 +18,6 @@ namespace bbc_6_minute
 
     private:
         void SaveMediasAndTranscriptsPagesUrlAddresses();
-        std::shared_ptr<std::ifstream> GetMediasAndTranscriptsUrlAddressesFileStream();
 
     private:
         static std::shared_ptr<MediasAndTranscriptsPagesUrlAddresses> medias_and_transcripts_pages_url_addresses_ptr_;
