@@ -3,9 +3,12 @@
 
 namespace bbc_6_minute
 {
-    class Unitless
+    namespace unit_less_courses
     {
-    public:
-        void DownloadCourseWithoutUnits();
-    };
+        class Unitless
+        {
+        public:
+            void DownloadCourseWithoutUnits();
+        };
+    }
 }

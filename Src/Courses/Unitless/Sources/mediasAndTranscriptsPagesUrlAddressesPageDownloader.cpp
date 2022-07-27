@@ -9,19 +9,22 @@
 
 namespace bbc_6_minute
 {
-    void MediasAndTranscriptsPagesUrlAddressesPageDownloader::DownloadMediasAndTranscriptsPagesUrlAddressesPage()
+    namespace unit_less_courses
     {
-        utils::RemoveFile(url_addresses_page_file_name_);
+        void MediasAndTranscriptsPagesUrlAddressesPageDownloader::DownloadMediasAndTranscriptsPagesUrlAddressesPage()
+        {
+            utils::filesystem::RemoveFile(url_addresses_page_file_name_);
 
-        Downloader(
-            CurrentCourse().GetCurrentCourseDownloadCentrePageUrlAddress(units_absence_mark_)
-            , url_addresses_page_file_name_
-        ).Download();
-    }
+            utils::Downloader(
+                CurrentCourse().GetCurrentCourseDownloadCentrePageUrlAddress(units_absence_mark_)
+                , url_addresses_page_file_name_
+            ).Download();
+        }
 
-    std::shared_ptr<std::string> MediasAndTranscriptsPagesUrlAddressesPageDownloader::
-        GetMediasAndTranscriptsPagesUrlAddressesPageFilename()
-    {
-        return std::make_shared<std::string>(url_addresses_page_file_name_);
+        std::shared_ptr<std::string> MediasAndTranscriptsPagesUrlAddressesPageDownloader::
+            GetMediasAndTranscriptsPagesUrlAddressesPageFilename()
+        {
+            return std::make_shared<std::string>(url_addresses_page_file_name_);
+        }
     }
 }

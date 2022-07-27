@@ -5,7 +5,7 @@
 #include <map>
 
 
-namespace bbc_6_minute
+namespace utils
 {
     typedef std::map<std::string, std::filesystem::path> MissingFilesForDownload;
 

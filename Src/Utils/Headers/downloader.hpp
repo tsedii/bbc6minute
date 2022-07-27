@@ -3,7 +3,7 @@
 #include <string>
 
 
-namespace bbc_6_minute
+namespace utils
 {
     class Downloader
     {

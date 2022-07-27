@@ -1,7 +1,7 @@
 #include "downloader.hpp"
 
 
-namespace bbc_6_minute
+namespace utils
 {
     Downloader::Downloader(const std::string& url_addresses, const std::string& filesystem_file_name)
         :url_addresses_(url_addresses), filesystem_file_name_(filesystem_file_name)

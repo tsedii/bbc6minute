@@ -8,15 +8,18 @@
 
 namespace bbc_6_minute
 {
-    void Unitless::DownloadCourseWithoutUnits()
+    namespace unit_less_courses
     {
-        if (CurrentCourse().IsThisCourseWithUnits())
+        void Unitless::DownloadCourseWithoutUnits()
         {
-            return;
+            if (CurrentCourse().IsThisCourseWithUnits())
+            {
+                return;
+            }
+    
+            MediasAndTranscriptsPagesUrlAddressesPageDownloader().DownloadMediasAndTranscriptsPagesUrlAddressesPage();
+            MediasAndTranscriptsPagesUrlAddressesExtracter().ExtractMediasAndTranscriptsPagesUrlAddresses();
+            MediasAndTranscriptsUrlAddressesPagesDownloader().DownloadMediasAndTranscriptsUrlAddressesPages();
         }
-
-        MediasAndTranscriptsPagesUrlAddressesPageDownloader().DownloadMediasAndTranscriptsPagesUrlAddressesPage();
-        MediasAndTranscriptsPagesUrlAddressesExtracter().ExtractMediasAndTranscriptsPagesUrlAddresses();
-        MediasAndTranscriptsUrlAddressesPagesDownloader().DownloadMediasAndTranscriptsUrlAddressesPages();
     }
 }

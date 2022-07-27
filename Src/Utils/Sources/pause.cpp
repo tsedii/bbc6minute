@@ -4,7 +4,7 @@
 #include <chrono>
 
 
-namespace bbc_6_minute
+namespace utils
 {
     void Pause::On()
     {

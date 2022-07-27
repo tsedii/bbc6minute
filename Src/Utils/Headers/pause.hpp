@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace bbc_6_minute
+namespace utils
 {
     class Pause
     {

@@ -5,7 +5,7 @@
 #include "utils.hpp"
 
 
-namespace bbc_6_minute
+namespace utils
 {
     std::shared_ptr<MissingFilesForDownload> MissingFiles::missing_files_for_download_ptr_ = nullptr;
     
@@ -53,7 +53,7 @@ namespace bbc_6_minute
     {
         for (const auto& missing_file_path : missing_files_pathes)
         {
-            utils::CreateMissingSubdirectories(missing_file_path);
+            utils::filesystem::CreateMissingSubdirectories(missing_file_path);
         } 
     }
 }

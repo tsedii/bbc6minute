@@ -6,18 +6,19 @@
 
 namespace bbc_6_minute
 {
-
-    void CurrentUnitDownloadCentrePageDownloader::DownloadCurrentUnitDownloadCentrePage()
+    namespace with_units_courses
     {
-        if (!utils::IsFilesystemObjectExists(CurrentUnit().GetDownloadCentrePageFileName()))
+        void CurrentUnitDownloadCentrePageDownloader::DownloadCurrentUnitDownloadCentrePage()
         {
-            Downloader(GetUrlAddress()).Download();
+            if (!utils::filesystem::IsFilesystemObjectExists(CurrentUnit().GetDownloadCentrePageFileName()))
+            {
+                utils::Downloader(GetUrlAddress()).Download();
+            }
+        }
+
+        std::string CurrentUnitDownloadCentrePageDownloader::GetUrlAddress()
+        {
+            return CurrentUnit().GetCurrentUnitDownloadCentrePageUrlAddress();
         }
     }
-
-    std::string CurrentUnitDownloadCentrePageDownloader::GetUrlAddress()
-    {
-        return CurrentUnit().GetCurrentUnitDownloadCentrePageUrlAddress();
-    }
-
 }

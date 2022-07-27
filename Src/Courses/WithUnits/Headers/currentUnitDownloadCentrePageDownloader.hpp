@@ -6,15 +6,16 @@
 
 namespace bbc_6_minute
 {
-
-    class CurrentUnitDownloadCentrePageDownloader
+    namespace with_units_courses
     {
-    public:
-        void DownloadCurrentUnitDownloadCentrePage();
-
-    private:
-        std::string GetUrlAddress();
-        std::string GetCurrentUnitDownloadCentrePageUrlAddress();
-    };
-
+        class CurrentUnitDownloadCentrePageDownloader
+        {
+        public:
+            void DownloadCurrentUnitDownloadCentrePage();
+    
+        private:
+            std::string GetUrlAddress();
+            std::string GetCurrentUnitDownloadCentrePageUrlAddress();
+        };
+    }
 }

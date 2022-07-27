@@ -3,12 +3,12 @@
 
 namespace bbc_6_minute
 {
-    class CurrentUnitMediasAndTranscriptsDownloader
+    namespace with_units_courses
     {
-    public:
-        void DownloadCurrentUnitMediasAndTranscripts();
-
-    private:
-        
-    };
+        class CurrentUnitMediasAndTranscriptsDownloader
+        {
+        public:
+            void DownloadCurrentUnitMediasAndTranscripts();
+        };
+    }
 }

@@ -7,66 +7,69 @@
 
 namespace bbc_6_minute
 {
-    void CurrentUnitVocabularyAndGrammarReferenceDownloader::DownloadCurrentUnitVocabularyAndGrammarReference()
+    namespace with_units_courses
     {
-        InitializeVocabularyAndGrammaReferencesAttributes();
-
-        for (const auto& [url_address, filesystem_file_name] : *vocabulary_and_gramma_references_attributes_ptr_)
+        void CurrentUnitVocabularyAndGrammarReferenceDownloader::DownloadCurrentUnitVocabularyAndGrammarReference()
         {
-            std::system(std::string(
-                downloader_ 
-                + filesystem_file_name.string() 
-                + " "
-                + url_address
-            ).c_str());
+            InitializeVocabularyAndGrammaReferencesAttributes();
+
+            for (const auto& [url_address, filesystem_file_name] : *vocabulary_and_gramma_references_attributes_ptr_)
+            {
+                std::system(std::string(
+                    downloader_ 
+                    + filesystem_file_name.string() 
+                    + " "
+                    + url_address
+                ).c_str());
+            }
+
+            utils::Pause().On();
         }
-        
-        Pause().On();
-    }
 
-    std::shared_ptr<std::string> CurrentUnitVocabularyAndGrammarReferenceDownloader::GetVocabularyReferenceUrlAddress()
-    {
-        return std::make_shared<std::string>(CurrentCourse().GetCurrentCourseVocabularyReferenceUrlAddress(CurrentUnit().GetCurrentUnitNumber()));
-    }
-
-    std::shared_ptr<std::string> CurrentUnitVocabularyAndGrammarReferenceDownloader::GetGrammarReferenceUrlAddress()
-    {
-        return std::make_shared<std::string>(CurrentCourse().GetCurrentCourseGrammarReferenceUrlAddress(CurrentUnit().GetCurrentUnitNumber()));
-    }
-
-    std::shared_ptr<std::filesystem::path> CurrentUnitVocabularyAndGrammarReferenceDownloader::GetReferenceFilesystemFilename(
-        const std::string& reference_filesystem_filename_base
-    )
-    {
-        std::string reference_filesystem_filename_base_tmp(reference_filesystem_filename_base);
-
-        CurrentUnit().AddCurrentUnitPrefix(reference_filesystem_filename_base_tmp);
-        CurrentCourse().AddCurrentCoursePrefix(reference_filesystem_filename_base_tmp);
-
-        return CurrentUnit().GetFullFilesystemFileName(reference_filesystem_filename_base_tmp);
-    }
-
-    void CurrentUnitVocabularyAndGrammarReferenceDownloader::InitializeVocabularyAndGrammaReferencesAttributes()
-    {
-        if (!vocabulary_and_gramma_references_attributes_ptr_)
+        std::shared_ptr<std::string> CurrentUnitVocabularyAndGrammarReferenceDownloader::GetVocabularyReferenceUrlAddress()
         {
-            vocabulary_and_gramma_references_attributes_ptr_ = std::make_unique<VocabularyAndGrammaReferencesAttributes>();
+            return std::make_shared<std::string>(CurrentCourse().GetCurrentCourseVocabularyReferenceUrlAddress(CurrentUnit().GetCurrentUnitNumber()));
         }
-        
-        if (!utils::IsFilesystemObjectExists(*(GetReferenceFilesystemFilename("VocabularyReference.pdf")))
-            and !((*(GetVocabularyReferenceUrlAddress())).empty())
+
+        std::shared_ptr<std::string> CurrentUnitVocabularyAndGrammarReferenceDownloader::GetGrammarReferenceUrlAddress()
+        {
+            return std::make_shared<std::string>(CurrentCourse().GetCurrentCourseGrammarReferenceUrlAddress(CurrentUnit().GetCurrentUnitNumber()));
+        }
+
+        std::shared_ptr<std::filesystem::path> CurrentUnitVocabularyAndGrammarReferenceDownloader::GetReferenceFilesystemFilename(
+            const std::string& reference_filesystem_filename_base
         )
         {
-            (*vocabulary_and_gramma_references_attributes_ptr_)[*(GetVocabularyReferenceUrlAddress())] 
-                = *(GetReferenceFilesystemFilename("VocabularyReference.pdf"));
+            std::string reference_filesystem_filename_base_tmp(reference_filesystem_filename_base);
+
+            CurrentUnit().AddCurrentUnitPrefix(reference_filesystem_filename_base_tmp);
+            CurrentCourse().AddCurrentCoursePrefix(reference_filesystem_filename_base_tmp);
+
+            return CurrentUnit().GetFullFilesystemFileName(reference_filesystem_filename_base_tmp);
         }
-        
-        if (!utils::IsFilesystemObjectExists(*(GetReferenceFilesystemFilename("GrammarReference.pdf")))
-            and !((*(GetGrammarReferenceUrlAddress())).empty())
-        )
+
+        void CurrentUnitVocabularyAndGrammarReferenceDownloader::InitializeVocabularyAndGrammaReferencesAttributes()
         {
-            (*vocabulary_and_gramma_references_attributes_ptr_)[*(GetGrammarReferenceUrlAddress())] 
-                = *(GetReferenceFilesystemFilename("GrammarReference.pdf"));
+            if (!vocabulary_and_gramma_references_attributes_ptr_)
+            {
+                vocabulary_and_gramma_references_attributes_ptr_ = std::make_unique<VocabularyAndGrammaReferencesAttributes>();
+            }
+
+            if (!utils::filesystem::IsFilesystemObjectExists(*(GetReferenceFilesystemFilename("VocabularyReference.pdf")))
+                and !((*(GetVocabularyReferenceUrlAddress())).empty())
+            )
+            {
+                (*vocabulary_and_gramma_references_attributes_ptr_)[*(GetVocabularyReferenceUrlAddress())] 
+                    = *(GetReferenceFilesystemFilename("VocabularyReference.pdf"));
+            }
+
+            if (!utils::filesystem::IsFilesystemObjectExists(*(GetReferenceFilesystemFilename("GrammarReference.pdf")))
+                and !((*(GetGrammarReferenceUrlAddress())).empty())
+            )
+            {
+                (*vocabulary_and_gramma_references_attributes_ptr_)[*(GetGrammarReferenceUrlAddress())] 
+                    = *(GetReferenceFilesystemFilename("GrammarReference.pdf"));
+            }
         }
     }
 }
