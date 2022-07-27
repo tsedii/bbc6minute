@@ -1,6 +1,7 @@
 #include "currentUnit.hpp"
 #include "currentCourse.hpp"
 #include "missingFiles.hpp"
+#include "utils.hpp"
 
 #include "currentUnitDownloadCentrePageDownloader.hpp"
 #include "downloadCentrePageMediasAndTranscriptsUrlAddressesExtracter.hpp"
@@ -71,11 +72,6 @@ namespace bbc_6_minute
         );
     }
 
-    bool CurrentUnit::IsFilesystemFileExist(const std::filesystem::path& filesystem_file_name)
-    {
-        return std::filesystem::exists(filesystem_file_name);
-    }
-
     bool CurrentUnit::NextCurrentUnit()
     {
         if ( current_unit_number_ == CurrentCourse().GetMaximumUnitNumber() )
@@ -97,10 +93,7 @@ namespace bbc_6_minute
             return false;
         }
         
-        if (std::filesystem::exists(current_unit_download_centre_page_file_name_))
-        {
-            std::filesystem::remove(current_unit_download_centre_page_file_name_);
-        }
+        utils::RemoveFile(current_unit_download_centre_page_file_name_);
 
         if (MissingFiles().GetMissingFiles())
         {

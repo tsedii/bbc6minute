@@ -1,6 +1,7 @@
 #include "currentUnitDownloadCentrePageDownloader.hpp"
 #include "currentUnit.hpp"
 #include "downloader.hpp"
+#include "utils.hpp"
 
 
 namespace bbc_6_minute
@@ -8,7 +9,7 @@ namespace bbc_6_minute
 
     void CurrentUnitDownloadCentrePageDownloader::DownloadCurrentUnitDownloadCentrePage()
     {
-        if (!std::filesystem::exists(CurrentUnit().GetDownloadCentrePageFileName()))
+        if (!utils::IsFilesystemObjectExists(CurrentUnit().GetDownloadCentrePageFileName()))
         {
             Downloader(GetUrlAddress()).Download();
         }

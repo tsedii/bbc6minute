@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "utils.hpp"
+
 
 namespace bbc_6_minute
 {
@@ -51,10 +53,7 @@ namespace bbc_6_minute
     {
         for (const auto& missing_file_path : missing_files_pathes)
         {
-            if (!std::filesystem::exists(missing_file_path))
-            {
-                std::filesystem::create_directories(missing_file_path);
-            }
+            utils::CreateMissingSubdirectories(missing_file_path);
         } 
     }
 }

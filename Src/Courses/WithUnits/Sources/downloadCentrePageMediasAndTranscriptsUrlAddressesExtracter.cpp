@@ -2,6 +2,7 @@
 #include "currentUnit.hpp"
 #include "missingFiles.hpp"
 #include "currentCourse.hpp"
+#include "utils.hpp"
 
 #include <fstream>
 #include <regex>
@@ -31,8 +32,8 @@ namespace bbc_6_minute
         {
             while (std::getline(medias_and_transcripts_url_addresses_file_stream, medias_and_transcripts_url_addresses_file_line))
             {
-                if (!(medias_and_transcripts_url_addresses_file_line.find(".pdf") != std::string::npos 
-                    or medias_and_transcripts_url_addresses_file_line.find(".mp3") != std::string::npos))
+                if (medias_and_transcripts_url_addresses_file_line.find(".pdf") == std::string::npos 
+                    and medias_and_transcripts_url_addresses_file_line.find(".mp3") == std::string::npos)
                 {
                     continue;
                 }
@@ -88,7 +89,7 @@ namespace bbc_6_minute
 
             filesystem_file_name = *(CurrentUnit().GetFullFilesystemFileName(filesystem_file_name));
 
-            if(!CurrentUnit().IsFilesystemFileExist(filesystem_file_name))
+            if(!utils::IsFilesystemObjectExists(filesystem_file_name))
             {
                 MissingFiles().SaveForDownload(medias_and_transcripts_url_addresses_file_name, filesystem_file_name);
             }

@@ -2,6 +2,7 @@
 #include "pause.hpp"
 #include "currentCourse.hpp"
 #include "currentUnit.hpp"
+#include "utils.hpp"
 
 
 namespace bbc_6_minute
@@ -52,7 +53,7 @@ namespace bbc_6_minute
             vocabulary_and_gramma_references_attributes_ptr_ = std::make_unique<VocabularyAndGrammaReferencesAttributes>();
         }
         
-        if (!CurrentUnit().IsFilesystemFileExist(*(GetReferenceFilesystemFilename("VocabularyReference.pdf")))
+        if (!utils::IsFilesystemObjectExists(*(GetReferenceFilesystemFilename("VocabularyReference.pdf")))
             and !((*(GetVocabularyReferenceUrlAddress())).empty())
         )
         {
@@ -60,7 +61,7 @@ namespace bbc_6_minute
                 = *(GetReferenceFilesystemFilename("VocabularyReference.pdf"));
         }
         
-        if (!CurrentUnit().IsFilesystemFileExist(*(GetReferenceFilesystemFilename("GrammarReference.pdf")))
+        if (!utils::IsFilesystemObjectExists(*(GetReferenceFilesystemFilename("GrammarReference.pdf")))
             and !((*(GetGrammarReferenceUrlAddress())).empty())
         )
         {

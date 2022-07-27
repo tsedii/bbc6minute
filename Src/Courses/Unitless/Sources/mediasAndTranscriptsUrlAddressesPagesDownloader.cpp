@@ -39,10 +39,7 @@ namespace bbc_6_minute
                 .GetMediasAndTranscriptsPagesUrlAddressesPageFilename())
         };
 
-        if (std::filesystem::exists(url_addresses_page_file_name))
-        {
-            std::filesystem::remove(url_addresses_page_file_name);
-        }
+        utils::RemoveFile(url_addresses_page_file_name);
 
         Downloader(
             medias_and_transcripts_pages_url_addresses_begin_ 
@@ -67,17 +64,17 @@ namespace bbc_6_minute
         
         if (!media_and_transcript_url_addresses_ptr_)
         {
-            media_and_transcript_url_addresses_ptr_ = std::make_shared<MediasAndTranscriptsPagesUrlAddresses>();
+            media_and_transcript_url_addresses_ptr_ = std::make_shared<MediaAndTranscriptUrlAddresses>();
         }
 
-        std::string medias_and_transcripts_url_addresses_file_line;
+        std::string media_and_transcript_url_addresses_file_line;
 
         try
         {
-            while (std::getline(*media_and_transcript_url_addresses_file_stream_ptr, medias_and_transcripts_url_addresses_file_line))
+            while (std::getline(*media_and_transcript_url_addresses_file_stream_ptr, media_and_transcript_url_addresses_file_line))
             {
-                if (medias_and_transcripts_url_addresses_file_line.find(".pdf") == std::string::npos
-                    or medias_and_transcripts_url_addresses_file_line.find(".mp3") == std::string::npos
+                if (media_and_transcript_url_addresses_file_line.find(".pdf") == std::string::npos
+                    and media_and_transcript_url_addresses_file_line.find(".mp3") == std::string::npos
                 )
                 {
                     continue;
@@ -89,9 +86,9 @@ namespace bbc_6_minute
 
                     std::smatch match;
 
-                    std::string::const_iterator search_start( medias_and_transcripts_url_addresses_file_line.cbegin() );
+                    std::string::const_iterator search_start( media_and_transcript_url_addresses_file_line.cbegin() );
 
-                    while (std::regex_search(search_start, medias_and_transcripts_url_addresses_file_line.cend(), match, regex_extract_file_name_template))
+                    while (std::regex_search(search_start, media_and_transcript_url_addresses_file_line.cend(), match, regex_extract_file_name_template))
                     {
                         media_and_transcript_url_addresses_ptr_->insert(match[1].str());
                         search_start = match.suffix().first;
@@ -109,6 +106,57 @@ namespace bbc_6_minute
             std::cerr << "Unknown error" << '\n';
         }
     }
+
+    std::string MediasAndTranscriptsUrlAddressesPagesDownloader::ExtractDateFromFileName()
+    {
+        if (!media_and_transcript_url_addresses_ptr_)
+        {
+            return std::string();
+        }
+
+        std::regex regex_extract_date_template("/(\\d{6})_");
+
+        std::smatch match;
+
+        std::regex_search(
+            (media_and_transcript_url_addresses_ptr_->cbegin())->cbegin()
+            , (media_and_transcript_url_addresses_ptr_->cbegin())->cend()
+            , match
+            , regex_extract_date_template
+        );
+
+        return match[1].str();
+    }
+
+    std::shared_ptr<std::filesystem::path> MediasAndTranscriptsUrlAddressesPagesDownloader::GetCurrentSubPath()
+    {
+        std::string sub_path(ExtractDateFromFileName());
+
+        if (sub_path.empty())
+        {
+            return nullptr;
+        }
+        
+        const unsigned int two_digit_year_designation{2};
+
+        // trims from the argument-valued position to the end of the string
+        sub_path.erase(two_digit_year_designation);
+
+        const unsigned int string_begin_position{0};
+
+        return std::make_shared<std::filesystem::path>(
+                   sub_path.insert(string_begin_position, "20")
+               );
+    }
+
+    void MediasAndTranscriptsUrlAddressesPagesDownloader::CheckCurrentSubPathExistence()
+    {
+        /**(CurrentCourse().GetCurrentCoursePath())
+            / GetCurrentSubPath*/
+    }
+
+    void MediasAndTranscriptsUrlAddressesPagesDownloader::CheckMediaAndTranscriptFilesExistence()
+    {}
 
     void MediasAndTranscriptsUrlAddressesPagesDownloader::DownloadMediaAndTranscript()
     {}
