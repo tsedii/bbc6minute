@@ -19,6 +19,7 @@ set( SOURCE_FILES
     Src/Courses/Unitless/Sources/mediasAndTranscriptsPagesUrlAddressesPageDownloader.cpp
     Src/Courses/Unitless/Sources/mediasAndTranscriptsPagesUrlAddressesExtracter.cpp
     Src/Courses/Unitless/Sources/mediasAndTranscriptsUrlAddressesPagesDownloader.cpp
+    Src/Courses/Unitless/Sources/mediaAndTranscriptDownloader.cpp
 
     Src/Utils/Sources/utils.cpp
     Src/Utils/Sources/missingFiles.cpp

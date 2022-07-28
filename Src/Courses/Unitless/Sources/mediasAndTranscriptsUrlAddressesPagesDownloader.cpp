@@ -8,6 +8,7 @@
 #include "downloader.hpp"
 #include "mediasAndTranscriptsPagesUrlAddressesPageDownloader.hpp"
 #include "utils.hpp"
+#include "mediaAndTranscriptDownloader.hpp"
 
 
 namespace bbc_6_minute
@@ -29,7 +30,7 @@ namespace bbc_6_minute
             {
                 DownloadMediaAndTranscriptUrlAddressesPage(media_and_transcript_page_url_address);
                 ExtractMediaAndTranscriptUrlAddresses();
-                DownloadMediaAndTranscript();
+                MediaAndTranscriptDownloader(media_and_transcript_url_addresses_ptr_).DownloadMediaAndTranscript();
                 return; // debug instruction
             }
         }
@@ -108,59 +109,5 @@ namespace bbc_6_minute
                 std::cerr << "Unknown error" << '\n';
             }
         }
-
-        std::string MediasAndTranscriptsUrlAddressesPagesDownloader::ExtractDateFromFileName()
-        {
-            if (!media_and_transcript_url_addresses_ptr_)
-            {
-                return std::string();
-            }
-
-            std::regex regex_extract_date_template("/(\\d{6})_");
-
-            std::smatch match;
-
-            std::regex_search(
-                (media_and_transcript_url_addresses_ptr_->cbegin())->cbegin()
-                , (media_and_transcript_url_addresses_ptr_->cbegin())->cend()
-                , match
-                , regex_extract_date_template
-            );
-
-            return match[1].str();
-        }
-
-        std::shared_ptr<std::filesystem::path> MediasAndTranscriptsUrlAddressesPagesDownloader::GetCurrentSubPath()
-        {
-            std::string sub_path(ExtractDateFromFileName());
-
-            if (sub_path.empty())
-            {
-                return nullptr;
-            }
-
-            const unsigned int two_digit_year_designation{2};
-
-            // trims from the argument-valued position to the end of the string
-            sub_path.erase(two_digit_year_designation);
-
-            const unsigned int string_begin_position{0};
-
-            return std::make_shared<std::filesystem::path>(
-                       sub_path.insert(string_begin_position, "20")
-                   );
-        }
-
-        void MediasAndTranscriptsUrlAddressesPagesDownloader::CheckCurrentSubPathExistence()
-        {
-            /**(CurrentCourse().GetCurrentCoursePath())
-                / GetCurrentSubPath*/
-        }
-
-        void MediasAndTranscriptsUrlAddressesPagesDownloader::CheckMediaAndTranscriptFilesExistence()
-        {}
-
-        void MediasAndTranscriptsUrlAddressesPagesDownloader::DownloadMediaAndTranscript()
-        {}
     }
 }
