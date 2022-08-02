@@ -25,8 +25,6 @@ namespace bbc_6_minute
     
             std::string DownloadFileNameToFilesystemFileName(const std::string& download_file_name);
     
-            std::string UrlAddressToDownloadFileName(const std::string& url_address);
-    
             void DeleteRedundantSymbols(std::string& filesystem_file_name);
     
         private:

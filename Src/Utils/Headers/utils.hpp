@@ -17,5 +17,20 @@ namespace utils
         bool RemoveFile(const std::filesystem::path& file_name);
     
         bool IsFilesystemObjectExists(const std::filesystem::path& filesystem_object);
+
+        std::shared_ptr<std::string> UrlAddressToDownloadFileName(const std::string& url_address);
+    }
+
+    namespace string
+    {
+        std::shared_ptr<std::string> SingleExtractSubstringFromString(
+            const std::string& string
+            , const std::string& substring_regex_template
+        );
+    }
+
+    namespace date
+    {
+        std::shared_ptr<std::string> DdMmYyyyDateToYyMmDd(const std::string& dd_mm_yyyy_date);
     }
 }

@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 3.0.0 )
+cmake_minimum_required( VERSION 3.11 )
 
 project( bbc6minute VERSION 0.1.0 )
 
@@ -35,3 +35,8 @@ include_directories(
 )
 
 add_executable( ${PROJECT_NAME} ${SOURCE_FILES} )
+
+##########
+# GTests
+##########
+add_subdirectory(Src/Tests)

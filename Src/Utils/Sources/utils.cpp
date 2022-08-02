@@ -1,6 +1,7 @@
 #include "utils.hpp"
 
 #include <iostream>
+#include <regex>
 
 
 namespace utils
@@ -68,6 +69,56 @@ namespace utils
         bool IsFilesystemObjectExists(const std::filesystem::path& filesystem_object)
         {
             return std::filesystem::exists(filesystem_object);
+        }
+
+        std::shared_ptr<std::string> UrlAddressToDownloadFileName(const std::string& url_address)
+        {
+            return std::make_shared<std::string>(
+                url_address.substr(url_address.find_last_of('/') + 1)
+            );
+        }
+    }
+
+    namespace string
+    {
+        std::shared_ptr<std::string> SingleExtractSubstringFromString(
+            const std::string& string
+            , const std::string& substring_regex_template
+        )
+        {
+            // substring_regex_template example: "/(\\d{6})_" 
+            // It extracts only six digits from string like "dfk123vhbekb/123456_d;fgb;rg;rnb"
+            std::regex regex_extract_date_template(substring_regex_template);
+
+            std::smatch match;
+
+            if (std::regex_search(
+                string.cbegin()
+                , string.cend()
+                , match
+                , regex_extract_date_template
+            ))
+            {
+                return std::make_shared<std::string>(match[1].str());
+            }
+
+            return nullptr;
+        }
+    }
+
+    namespace date
+    {
+        std::shared_ptr<std::string> DdMmYyyyDateToYyMmDd(const std::string& dd_mm_yyyy_date)
+        {
+            // 02102014 to 141002 or ddmmyyyy to yymmdd
+
+            std::string yy_mm_dd_date = dd_mm_yyyy_date.substr(0, 2);
+
+            yy_mm_dd_date.insert(0, dd_mm_yyyy_date.substr(2, 2));
+
+            yy_mm_dd_date.insert(0, dd_mm_yyyy_date.substr(6));
+
+            return std::make_shared<std::string>(yy_mm_dd_date);
         }
     }
 }

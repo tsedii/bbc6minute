@@ -26,12 +26,14 @@ namespace bbc_6_minute
                 return;
             }
 
-            for (auto const& media_and_transcript_page_url_address : *medias_and_transcripts_pages_url_addresses_ptr)
+            for (auto const& media_and_transcript_page_url_address_last_part : *medias_and_transcripts_pages_url_addresses_ptr)
             {
-                DownloadMediaAndTranscriptUrlAddressesPage(media_and_transcript_page_url_address);
+                DownloadMediaAndTranscriptUrlAddressesPage(media_and_transcript_page_url_address_last_part);
                 ExtractMediaAndTranscriptUrlAddresses();
-                MediaAndTranscriptDownloader(media_and_transcript_url_addresses_ptr_).DownloadMediaAndTranscript();
-                return; // debug instruction
+                MediaAndTranscriptDownloader(
+                    media_and_transcript_url_addresses_ptr_
+                    , GetMediaAndTranscriptDate(media_and_transcript_page_url_address_last_part)
+                ).DownloadMediaAndTranscript();
             }
         }
 
@@ -108,6 +110,54 @@ namespace bbc_6_minute
             {
                 std::cerr << "Unknown error" << '\n';
             }
+        }
+
+        std::shared_ptr<std::string> MediasAndTranscriptsUrlAddressesPagesDownloader
+            ::GetMediaAndTranscriptDate(const std::string& media_and_transcript_page_url_address_last_part)
+        {
+            if (media_and_transcript_page_url_address_last_part.empty())
+            {
+                return nullptr;
+            }
+            
+            std::shared_ptr<std::string> media_and_transcript_date_ptr{nullptr};
+            
+            // Extract date for string like "/features/6-minute-english/150122"
+            
+            media_and_transcript_date_ptr = utils::string::SingleExtractSubstringFromString(
+                media_and_transcript_page_url_address_last_part, "/(\\d{6})$"
+            );
+
+            if (!media_and_transcript_date_ptr->empty())
+            {
+                return media_and_transcript_date_ptr;
+            }
+            
+            // Extract date for string like "/features/6-minute-english/ep-02102014"
+            
+            media_and_transcript_date_ptr = utils::string::SingleExtractSubstringFromString(
+                media_and_transcript_page_url_address_last_part, "/ep-(\\d{8})$"
+            );
+
+            media_and_transcript_date_ptr = utils::date::DdMmYyyyDateToYyMmDd(*media_and_transcript_date_ptr);
+
+            if (!media_and_transcript_date_ptr->empty())
+            {
+                return media_and_transcript_date_ptr;
+            }
+
+            // Extract date for string like "/features/6-minute-english/ep-141127
+
+            media_and_transcript_date_ptr = utils::string::SingleExtractSubstringFromString(
+                media_and_transcript_page_url_address_last_part, "/ep-(\\d{6})$"
+            );
+
+            if (!media_and_transcript_date_ptr->empty())
+            {
+                return media_and_transcript_date_ptr;
+            }
+
+            return nullptr;
         }
     }
 }

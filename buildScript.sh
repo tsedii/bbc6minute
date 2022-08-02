@@ -14,6 +14,7 @@ alias ENDCOMMENT="fi"
 #}
 
 builtTarget="bbc6minute"
+builtTestTarget="bbc6minuteTest"
 
 DeleteTmpBildFolders() {
 
@@ -26,10 +27,14 @@ fi
 
 }
 
-DeleteTestFiles() {
+DeleteTargetFiles() {
 
 if [ -f $builtTarget ]; then
       rm -f $builtTarget
+fi
+
+if [ -f $builtTestTarget ]; then
+      rm -f $builtTestTarget
 fi
 
 }
@@ -52,8 +57,20 @@ fi
 
 }
 
+SaveTargetFiles() {
+
+if [ -f build/$builtTarget ]; then
+      cp build/$builtTarget ./
+fi
+
+if [ -f build/Src/Tests/$builtTestTarget ]; then
+      cp build/Src/Tests/$builtTestTarget ./
+fi
+
+}
+
 DeleteTmpBildFolders
-DeleteTestFiles
+DeleteTargetFiles
 
 
 mkdir build
@@ -68,9 +85,7 @@ PreviousCommandExitCodeCheck
 
 cd ..
 
-if [ -f build/$builtTarget ]; then
-      cp build/$builtTarget ./
-fi
+SaveTargetFiles
 
 CheckNotDelBuildCommandLineArgument $1
 

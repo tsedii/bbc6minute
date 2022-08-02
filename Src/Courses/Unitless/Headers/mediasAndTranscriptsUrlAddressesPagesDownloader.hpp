@@ -21,6 +21,9 @@ namespace bbc_6_minute
         private:
             void DownloadMediaAndTranscriptUrlAddressesPage(const std::string& media_and_transcript_page_url_address);
             void ExtractMediaAndTranscriptUrlAddresses();
+            std::shared_ptr<std::string> GetMediaAndTranscriptDate(
+                const std::string& media_and_transcript_page_url_address_last_part
+            );
 
         private:
             const std::string medias_and_transcripts_pages_url_addresses_begin_{

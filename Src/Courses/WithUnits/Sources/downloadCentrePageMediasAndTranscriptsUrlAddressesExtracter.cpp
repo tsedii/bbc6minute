@@ -100,7 +100,9 @@ namespace bbc_6_minute
 
         std::string DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::DownloadFileNameToFilesystemFileName(const std::string& download_file_name)
         {
-            std::string filesystem_file_name(UrlAddressToDownloadFileName(download_file_name));
+            std::string filesystem_file_name(
+                *utils::filesystem::UrlAddressToDownloadFileName(download_file_name)
+            );
 
             DeleteRedundantSymbols(filesystem_file_name);
 
@@ -109,11 +111,6 @@ namespace bbc_6_minute
             CurrentCourse().AddCurrentCoursePrefix(filesystem_file_name);
 
             return filesystem_file_name;
-        }
-
-        std::string DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::UrlAddressToDownloadFileName(const std::string& url_address)
-        {
-            return url_address.substr(url_address.find_last_of('/') + 1);
         }
 
         void DownloadCentrePageMediasAndTranscriptsUrlAddressesExtracter::DeleteRedundantSymbols(std::string& filesystem_file_name)
