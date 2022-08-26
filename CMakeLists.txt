@@ -36,7 +36,9 @@ include_directories(
 
 add_executable( ${PROJECT_NAME} ${SOURCE_FILES} )
 
+
 ##########
 # GTests
 ##########
+
 add_subdirectory(Src/Tests)

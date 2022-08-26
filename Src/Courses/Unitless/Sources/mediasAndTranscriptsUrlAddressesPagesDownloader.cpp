@@ -8,6 +8,7 @@
 #include "downloader.hpp"
 #include "mediasAndTranscriptsPagesUrlAddressesPageDownloader.hpp"
 #include "utils.hpp"
+#include "logger.hpp"
 #include "mediaAndTranscriptDownloader.hpp"
 
 
@@ -23,7 +24,9 @@ namespace bbc_6_minute
 
             if (!medias_and_transcripts_pages_url_addresses_ptr)
             {
-                return;
+                throw std::logic_error ( FOR_LOG_LINE_FUNC_FILE ( 
+                    std::string ( "\n Can't get medias and transcripts pages URL addresses \n" ) ) 
+                );
             }
 
             for (auto const& media_and_transcript_page_url_address_last_part : *medias_and_transcripts_pages_url_addresses_ptr)
@@ -55,16 +58,22 @@ namespace bbc_6_minute
 
         void MediasAndTranscriptsUrlAddressesPagesDownloader::ExtractMediaAndTranscriptUrlAddresses()
         {
-            std::shared_ptr<std::ifstream> media_and_transcript_url_addresses_file_stream_ptr 
-                = utils::filesystem::GetFileStream(
+            std::shared_ptr<std::fstream> media_and_transcript_url_addresses_file_stream_ptr {
+                utils::filesystem::GetFileStream(
                     *(MediasAndTranscriptsPagesUrlAddressesPageDownloader()
                         .GetMediasAndTranscriptsPagesUrlAddressesPageFilename()
                     )
-                );
+                )
+            };
 
             if (!media_and_transcript_url_addresses_file_stream_ptr)
             {
-                return;
+                throw std::logic_error ( FOR_LOG_LINE_FUNC_FILE ( 
+                    std::string ( "\n Can't open file: \n" ) + 
+                    *(MediasAndTranscriptsPagesUrlAddressesPageDownloader()
+                        .GetMediasAndTranscriptsPagesUrlAddressesPageFilename()
+                    ) ) 
+                );
             }
 
             if (!media_and_transcript_url_addresses_ptr_)
@@ -104,11 +113,13 @@ namespace bbc_6_minute
             }
             catch(const std::exception& e)
             {
-                std::cerr << e.what() << '\n';
+                std::stringstream error_string_stream;
+                error_string_stream << std::endl << e.what() << std::endl;
+                throw std::runtime_error ( FOR_LOG_LINE_FUNC_FILE ( error_string_stream.str ( ) ) );
             }
             catch(...)
             {
-                std::cerr << "Unknown error" << '\n';
+                throw std::runtime_error ( FOR_LOG_LINE_FUNC_FILE ( std::string ( "\n Unknown error \n" ) ) );
             }
         }
 
@@ -128,7 +139,15 @@ namespace bbc_6_minute
                 media_and_transcript_page_url_address_last_part, "/(\\d{6})$"
             );
 
-            if (!media_and_transcript_date_ptr->empty())
+            if (!media_and_transcript_date_ptr)
+            {
+                return nullptr;
+            }
+            else if (!media_and_transcript_date_ptr->empty())
+            {
+                return nullptr;
+            }
+            else
             {
                 return media_and_transcript_date_ptr;
             }

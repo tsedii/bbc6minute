@@ -6,6 +6,7 @@
 
 #include "mediasAndTranscriptsPagesUrlAddressesPageDownloader.hpp"
 #include "utils.hpp"
+#include "logger.hpp"
 
 
 namespace bbc_6_minute
@@ -28,12 +29,13 @@ namespace bbc_6_minute
 
         void MediasAndTranscriptsPagesUrlAddressesExtracter::SaveMediasAndTranscriptsPagesUrlAddresses()
         {
-            std::shared_ptr<std::ifstream> medias_and_transcripts_url_addresses_file_stream_ptr 
-                = utils::filesystem::GetFileStream(
+            std::shared_ptr<std::fstream> medias_and_transcripts_url_addresses_file_stream_ptr {
+                utils::filesystem::GetFileStream(
                     *(MediasAndTranscriptsPagesUrlAddressesPageDownloader()
                         .GetMediasAndTranscriptsPagesUrlAddressesPageFilename()
                     )
-                );
+                )
+            };
 
             if (!medias_and_transcripts_url_addresses_file_stream_ptr)
             {
@@ -81,11 +83,13 @@ namespace bbc_6_minute
             }
             catch(const std::exception& e)
             {
-                std::cerr << e.what() << '\n';
+                std::stringstream error_string_stream;
+                error_string_stream << std::endl << e.what() << std::endl;
+                throw std::runtime_error ( FOR_LOG_LINE_FUNC_FILE ( error_string_stream.str ( ) ) );
             }
             catch(...)
             {
-                std::cerr << "Unknown error" << '\n';
+                throw std::runtime_error ( FOR_LOG_LINE_FUNC_FILE ( std::string ( "\n Unknown error \n" ) ) );
             }
         }
     }

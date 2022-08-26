@@ -3,29 +3,35 @@
 #include <iostream>
 #include <regex>
 
+#include "logger.hpp"
+
 
 namespace utils
 {
     namespace filesystem
     {
-        std::shared_ptr<std::ifstream> GetFileStream(const std::string& file_name)
+        std::shared_ptr<std::fstream> GetFileStream ( const std::string& file_name, std::ios_base::openmode mode )
         {
-            std::shared_ptr<std::ifstream> file_stream_ptr;
-    
-            try
+            std::shared_ptr<std::fstream> file_stream_ptr(
+                std::make_shared<std::fstream> ( file_name, mode )
+            );
+
+            if ( !file_stream_ptr )
             {
-                file_stream_ptr = std::make_shared<std::ifstream>(file_name);
+                throw std::logic_error (
+                    FOR_LOG_LINE_FUNC_FILE (
+                        std::string ( "\n can't create std::shared_ptr for std::fstream for open " )
+                        + file_name
+                    )
+                );
             }
-            catch(const std::exception& e)
+            else if ( !file_stream_ptr->is_open() )
             {
-                std::cerr << e.what() << '\n';
-                return nullptr;
+                throw std::logic_error ( 
+                    FOR_LOG_LINE_FUNC_FILE ( std::string( "\n failed to open " ) + file_name )
+                );
             }
-            catch(...)
-            {
-                return nullptr;
-            }
-            
+
             return file_stream_ptr;
         }
     
@@ -55,12 +61,13 @@ namespace utils
             }
             catch(const std::exception& e)
             {
-                std::cerr << e.what() << '\n';
-                return false;
+                std::stringstream error_string_stream;
+                error_string_stream << std::endl << e.what() << std::endl;
+                throw std::runtime_error ( FOR_LOG_LINE_FUNC_FILE ( error_string_stream.str ( ) ) );
             }
             catch(...)
             {
-                return false;
+                throw std::runtime_error ( FOR_LOG_LINE_FUNC_FILE ( std::string ( "\n Unknown error \n" ) ) );
             }
     
             return true;       
@@ -110,7 +117,12 @@ namespace utils
     {
         std::shared_ptr<std::string> DdMmYyyyDateToYyMmDd(const std::string& dd_mm_yyyy_date)
         {
-            // 02102014 to 141002 or ddmmyyyy to yymmdd
+            // 20102014 to 141020 or DDmmYYYY to YYmmDD
+
+            if ( dd_mm_yyyy_date.size() < std::string("20102014").size() )
+            {
+                throw std::runtime_error ( FOR_LOG_LINE_FUNC_FILE ( std::string ( "\n Error input date format \n" ) ) );
+            }
 
             std::string yy_mm_dd_date = dd_mm_yyyy_date.substr(0, 2);
 
